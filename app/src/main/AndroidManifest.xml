@@ -10,6 +10,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Team10">
         <activity
+            android:name=".EnterActivity"
+            android:exported="false" />
+        <activity
+            android:name=".MessageActivity"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
