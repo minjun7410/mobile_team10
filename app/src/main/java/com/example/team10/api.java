@@ -8,7 +8,7 @@ import java.net.URL;
 
 public class api {
     String BASE_URL = "https://kr.api.riotgames.com";
-    String TOKEN = "RGAPI-76b06206-2170-4896-bd05-1483d91d06e2";
+    String TOKEN = "API-KEY";
     public void get(String strUrl){
         try{
             URL url = new URL(strUrl);
