@@ -6,14 +6,18 @@
     android:layout_height="130dp"
     android:gravity="center"
     android:background="@drawable/id_register_item"
-    android:id="@+id/id_register_item">
+    android:id="@+id/id_register_item"
+    android:visibility="visible"
+    tools:showIn="@layout/activity_main"
+    >
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="wrap_content"
+        android:layout_width="150dp"
         android:layout_height="80dp"
         android:layout_weight="1"
-        tools:srcCompat="@tools:sample/avatars" />
+        android:src="@drawable/garen"
+        />
 
     <LinearLayout
         android:layout_width="wrap_content"

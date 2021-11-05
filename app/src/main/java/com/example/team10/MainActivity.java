@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -22,11 +23,14 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
+        //Dialog로 닉네임를 받아서 api를 통해 정보를 가져와 ImageView에 입력.
         Button plus_id_register = (Button) findViewById(R.id.plus_id_register);
         plus_id_register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 final EditText et = new EditText(getApplicationContext());
+                //닉네임을 받는 dialog
                 final AlertDialog.Builder alt_blt = new AlertDialog.Builder(MainActivity.this, R.style.plus_id_register_dialog_style);
                 alt_blt.setTitle("아이디 생성")
                         .setMessage("닉네임을 적어주세요")
@@ -44,22 +48,26 @@ public class MainActivity extends AppCompatActivity {
                                 } catch (InterruptedException e) {
                                     e.printStackTrace();
                                 }
-                                Log.d("Summoners_id :", apiThread.getSummoners_info("id"));
-                                Log.d("Summoners_name :", apiThread.getSummoners_info("name"));
-                                Log.d("Summoners_tier :", apiThread.getSummoners_info("tier"));
-                                LinearLayout id_register_item = new LinearLayout(getApplicationContext());
-                                id_register_item.getView
+                                //만약 아이디가 없는 아이디라면 Toast로 메시지 도시하고 중단.
+                                if(apiThread.getSummoners_info("is_success") == "false"){
+                                    Toast.makeText(getApplicationContext(), "Wrong NickName!!", Toast.LENGTH_SHORT).show();
+                                    return;
+                                }
                                 TextView user_nickname = (TextView) findViewById(R.id.user_nickname);
                                 TextView user_level = (TextView) findViewById(R.id.user_level);
                                 TextView user_tier = (TextView) findViewById(R.id.user_tier);
                                 TextView user_mbti = (TextView) findViewById(R.id.user_mbti);
                                 TextView user_manner = (TextView) findViewById(R.id.user_manner);
 
+                                LinearLayout user_layout = (LinearLayout) findViewById(R.id.id_register_item);
+                                plus_id_register.setVisibility(View.GONE);
+                                user_layout.setVisibility(View.VISIBLE);
+
                                 user_nickname.setText(value);
-                                user_level.setText(apiThread.getSummoners_info("level"));
-                                user_tier.setText(apiThread.getSummoners_info("tier"));
-                                user_mbti.setText("INFT");
-                                user_manner.setText("SUCK");
+                                user_level.setText("Level: " + apiThread.getSummoners_info("level"));
+                                user_tier.setText("Tier: " + apiThread.getSummoners_info("tier"));
+                                user_mbti.setText("MBTI: INFT");
+                                user_manner.setText("Manner: "+"SUCK");
                             }
                         });
                 AlertDialog dialog = alt_blt.create();

@@ -57,56 +57,24 @@ public class API {
         }
         return null;
     }
-    //받아온 고유 아이디로 사용자의 티어 등 정보를 받아오는 메서드
-    /*
-    public JSONObject Info_Get(String strUrl){
-        try {
-            URL url = new URL(strUrl);
-            HttpURLConnection con = (HttpURLConnection) url.openConnection();
-            con.setConnectTimeout(5000);
-            con.setReadTimeout(5000);
-            con.setRequestMethod("GET");
-            con.setDoOutput(false);
 
-            StringBuilder sb = new StringBuilder();
-
-            if(con.getResponseCode() == HttpURLConnection.HTTP_OK){
-                BufferedReader br = new BufferedReader(new InputStreamReader(con.getInputStream(), "utf-8"));
-                String line = br.readLine();
-                while(line != null){
-                    sb.append(line).append("\n");
-                    line = br.readLine();
-                }
-                br.close();
-                Log.d("InfoGet : ", sb.toString());
-                return new JSONObject(sb.toString());
-            }else{
-                Log.d("wrong response: ", con.getResponseMessage());
-            }
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }*/
 }
 class Name_API_Thread extends Thread{
     //api key 매번 갱신
-    String TOKEN = "RGAPI-e03c9ddf-3500-46c3-bbdf-75aa779d8065";
+    String TOKEN = "RGAPI-267b4cf4-d0f1-4889-b6f2-e9066972ec99";
     private String Summoners_name;
     private String Summoners_id;
     private int Summoners_level;
     private String Summoners_tier;
     private String Summoners_rank;
     private int Summoners_win, Summoners_lose;
+    private boolean is_success;
 
     public Name_API_Thread(String Summoners_name){
         this.Summoners_name = Summoners_name;
     }
 
+    //run 메서드는 summoner의 정보를 얻기 위해 필요한 encrypte_ID를 받기 위해 닉네임으로 api를 가져오는 메서드. 이 메서드에서 getInfo 메서드를 실행한다.
     @Override
     public void run() {
         String SummonerName = this.Summoners_name.replaceAll(" ", "%20");
@@ -114,6 +82,8 @@ class Name_API_Thread extends Thread{
         //API lol_api = new API();
         JSONObject jsonObj = new API().get(requestURL);
         try {
+            if(jsonObj == null){ is_success = false; return; }
+            else{ is_success = true;}
             Summoners_id = (String) jsonObj.get("id");
             Summoners_level = (int) jsonObj.get("summonerLevel");
             // 현재 레벨만 로그에 띄움
@@ -129,7 +99,9 @@ class Name_API_Thread extends Thread{
         Log.d("Summoners_id", Summoners_id);
         String requestURL = "https://kr.api.riotgames.com/lol/league/v4/entries/by-summoner/"+Summoners_id+"?api_key="+TOKEN;
         JSONObject jsonObj = new API().get(requestURL);
+
         try {
+
             Summoners_tier = (String) jsonObj.get("tier");
             Summoners_rank = (String) jsonObj.get("rank");
             Summoners_win = (int) jsonObj.get("win");
@@ -141,6 +113,8 @@ class Name_API_Thread extends Thread{
     }
     public String getSummoners_info(String needs){
         switch(needs){
+            case "is_success":
+                return String.valueOf(is_success);
             case "id":
                 return Summoners_id;
             case "name":
