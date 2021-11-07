@@ -10,14 +10,15 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Team10">
         <activity
-            android:name=".MainActivity"
+            android:name=".LoginActivity"
             android:exported="true">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
+                <action android:name="android.intent.action.Main" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".MainActivity"/>
+        <activity android:name=".RegisterActivity"/>
     </application>
 
 </manifest>
