@@ -11,9 +11,18 @@
     android:layout_gravity="center">
 
     <Button
+        android:id="@+id/registerBtnMain"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/register_game_id"/>
+        android:onClick="onClickRegisterBtn"
+        android:text="@string/register_game_id" />
+
+    <Button
+        android:id="@+id/matchingBtn"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:onClick="onClickMatchingBtn"
+        android:text="@string/matching_friend" />
 
 
 </LinearLayout>
