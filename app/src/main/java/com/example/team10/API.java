@@ -61,7 +61,7 @@ public class API {
 }
 class Name_API_Thread extends Thread{
     //api key 매번 갱신
-    String TOKEN = "RGAPI-267b4cf4-d0f1-4889-b6f2-e9066972ec99";
+    String TOKEN = "RGAPI-4bd48a6d-170c-4914-922f-afcd062791a4";
     private String Summoners_name;
     private String Summoners_id;
     private int Summoners_level;
@@ -69,6 +69,7 @@ class Name_API_Thread extends Thread{
     private String Summoners_rank;
     private int Summoners_win, Summoners_lose;
     private boolean is_success;
+    private int Summoners_icon;
 
     public Name_API_Thread(String Summoners_name){
         this.Summoners_name = Summoners_name;
@@ -86,6 +87,7 @@ class Name_API_Thread extends Thread{
             else{ is_success = true;}
             Summoners_id = (String) jsonObj.get("id");
             Summoners_level = (int) jsonObj.get("summonerLevel");
+            Summoners_icon = (int) jsonObj.get("profileIconId");
             // 현재 레벨만 로그에 띄움
             Log.d("Succsess : ", "get ID");
             getInfo();
@@ -125,6 +127,8 @@ class Name_API_Thread extends Thread{
                 return Summoners_rank;
             case "level":
                 return String.valueOf(Summoners_level);
+            case "icon":
+                return String.valueOf(Summoners_icon);
             default:
                 return "Dont care";
         }
