@@ -4,11 +4,13 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -48,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
                                 try {
                                     apiThread.start();
                                     apiThread.join();
+
                                 } catch (InterruptedException e) {
                                     e.printStackTrace();
                                 }
@@ -71,6 +74,9 @@ public class MainActivity extends AppCompatActivity {
                                 user_tier.setText("Tier: " + apiThread.getSummoners_info("tier"));
                                 user_mbti.setText("MBTI: INFT");
                                 user_manner.setText("Manner: "+"SUCK");
+
+                                ImageView user_icon = (ImageView) findViewById(R.id.user_icon);
+                                user_icon.setImageBitmap(apiThread.getSummoners_bitmap());
                             }
                         });
                 AlertDialog dialog = alt_blt.create();
@@ -78,18 +84,5 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-    }
-    private void excute_api(String value){
-        //롤 닉네임으로 사용자의 id, level 티어, 승패를 받아온다.
-        apiThread = new Name_API_Thread(value);
-        try {
-            apiThread.start();
-            apiThread.join();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        Log.d("Summoners_id :", apiThread.getSummoners_info("id"));
-        Log.d("Summoners_name :", apiThread.getSummoners_info("name"));
-        Log.d("Summoners_tier :", apiThread.getSummoners_info("tier"));
     }
 }

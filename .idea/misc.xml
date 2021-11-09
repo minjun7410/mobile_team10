@@ -3,18 +3,12 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Adroid/mobile_team10/app/src/main/res/layout/activity_login.xml" value="0.36614583333333334" />
-        <entry key="..\:/Adroid/mobile_team10/app/src/main/res/layout/activity_main.xml" value="0.33" />
-        <entry key="..\:/Adroid/mobile_team10/app/src/main/res/layout/activity_register.xml" value="0.36614583333333334" />
-        <entry key="..\:/Adroid/mobile_team10/app/src/main/res/layout/activity_second.xml" value="0.36614583333333334" />
-      </map>
-    </option>
-  </component>
-  <component name="DesignSurface">
-    <option name="filePathToZoomLevelMap">
-      <map>
         <entry key="..\:/Users/minju/AndroidStudioProjects/mobile_team10/app/src/main/res/layout/activity_main.xml" value="0.15833333333333333" />
         <entry key="..\:/Users/minju/AndroidStudioProjects/mobile_team10/app/src/main/res/xml/network_security_config.xml" value="0.2046875" />
+        <entry key="..\:/Users/minjun/AndroidStudioProjects/team10/app/src/main/res/drawable/id_register_item.xml" value="0.1953125" />
+        <entry key="..\:/Users/minjun/AndroidStudioProjects/team10/app/src/main/res/layout/activity_main.xml" value="0.17916666666666667" />
+        <entry key="..\:/Users/minjun/AndroidStudioProjects/team10/app/src/main/res/layout/activity_register.xml" value="0.17916666666666667" />
+        <entry key="..\:/Users/minjun/AndroidStudioProjects/team10/app/src/main/res/layout/id_register_item.xml" value="0.3333333333333333" />
       </map>
     </option>
   </component>
