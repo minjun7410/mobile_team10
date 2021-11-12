@@ -16,9 +16,10 @@
         android:text="@string/user_email" />
 
     <EditText
-        android:id="@+id/emailEtLogin"
+        android:id="@+id/etEmail_login"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:inputType="textEmailAddress"
         android:hint="@string/input_email" />
 
     <TextView
@@ -27,20 +28,21 @@
         android:text="@string/user_pw" />
 
     <EditText
-        android:id="@+id/pwEtLogin"
+        android:id="@+id/etPassword_login"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:inputType="textPassword"
         android:hint="@string/input_pw" />
 
     <Button
-        android:id="@+id/loginBtnLogin"
+        android:id="@+id/btnLogin_login"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:onClick="onClickLoginBtn"
         android:text="@string/login" />
 
     <Button
-        android:id="@+id/registerBtnLogin"
+        android:id="@+id/btnRegister_login"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:onClick="onClickRegisterBtn"

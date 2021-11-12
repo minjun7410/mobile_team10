@@ -11,12 +11,10 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.HashMap;
@@ -26,41 +24,43 @@ public class RegisterActivity extends AppCompatActivity {
     private FirebaseAuth firebaseAuth;
     final FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-    Button registerBtn;
-    Button emailCheckBtn;
-    Button nameCheckBtn;
+    Button BtnRegister;
+    Button BtnEmailCheck;
+    Button BtnNameCheck;
 
-    EditText emailEditText;
-    EditText pwEditText;
-    EditText pwCheckEditText;
-    EditText nameEditText;
+    EditText EtEmail;
+    EditText EtPassword;
+    EditText EtPasswordCheck;
+    EditText EtUsername;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
-        registerBtn = (Button) findViewById(R.id.registerBtnRegister);
-        emailCheckBtn = (Button) findViewById(R.id.emailCheckBtnRegister);
-        nameCheckBtn = (Button) findViewById(R.id.nameCheckBtnRegister);
+        BtnRegister = (Button) findViewById(R.id.btnRegister_register);
+        BtnEmailCheck = (Button) findViewById(R.id.btnEmailCheck_register);
+        BtnNameCheck = (Button) findViewById(R.id.btnUsernameCheck_register);
 
-        emailEditText = (EditText) findViewById(R.id.emailEtRegister);
-        pwEditText = (EditText) findViewById(R.id.pwEtRegister);
-        pwCheckEditText = (EditText) findViewById(R.id.pwCheckEtRegister);
-        nameEditText = (EditText) findViewById(R.id.nameEtRegister);
+        EtEmail = (EditText) findViewById(R.id.etEmail_register);
+        EtPassword = (EditText) findViewById(R.id.etPassword_register);
+        EtPasswordCheck = (EditText) findViewById(R.id.etPasswordCheck_register);
+        EtUsername = (EditText) findViewById(R.id.etUsername_register);
     }
 
-    public void onClickEmailCheckBtn(View view){
+    public void onClickBtnEmailCheck(View view){
+        Toast.makeText(RegisterActivity.this, "Click Email check button", Toast.LENGTH_SHORT).show();
     }
 
-    public void onClickNameCheckBtn(View view){
+    public void onClickBtnNameCheck(View view){
+        Toast.makeText(RegisterActivity.this, "Click username check button", Toast.LENGTH_SHORT).show();
     }
 
-    public void onClickRegisterBtn(View view){
-        String email = emailEditText.getText().toString();
-        String username = nameEditText.getText().toString();
-        String password = pwEditText.getText().toString();
-        String checkPassword = pwCheckEditText.getText().toString();
+    public void onClickBtnRegister(View view){
+        String email = EtEmail.getText().toString();
+        String username = EtUsername.getText().toString();
+        String password = EtPassword.getText().toString();
+        String checkPassword = EtPasswordCheck.getText().toString();
 
         if (email.equals("") || username.equals("") || password.equals("") || checkPassword.equals("")){
             Toast.makeText(RegisterActivity.this, "항목을 모두 입력해주세요.", Toast.LENGTH_SHORT).show();
