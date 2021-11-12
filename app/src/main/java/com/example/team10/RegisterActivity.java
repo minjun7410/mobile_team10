@@ -20,8 +20,13 @@ public class RegisterActivity extends AppCompatActivity {
     private FirebaseAuth firebaseAuth;
 
     Button registerBtn;
-    EditText idEtRegister;
-    EditText pwEtRegister;
+    Button emailCheckBtn;
+    Button nameCheckBtn;
+
+    EditText emailEditText;
+    EditText pwEditText;
+    EditText pwCheckEditText;
+    EditText nameEditText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,13 +34,28 @@ public class RegisterActivity extends AppCompatActivity {
         setContentView(R.layout.activity_register);
 
         registerBtn = (Button) findViewById(R.id.registerBtnRegister);
-        idEtRegister = (EditText) findViewById(R.id.idEtRegister);
-        pwEtRegister = (EditText) findViewById(R.id.pwEtRegister);
+        emailCheckBtn = (Button) findViewById(R.id.emailCheckBtnRegister);
+        nameCheckBtn = (Button) findViewById(R.id.nameCheckBtnRegister);
+
+        emailEditText = (EditText) findViewById(R.id.emailEtRegister);
+        pwEditText = (EditText) findViewById(R.id.pwEtRegister);
+        pwCheckEditText = (EditText) findViewById(R.id.pwCheckEtRegister);
+        nameEditText = (EditText) findViewById(R.id.nameEtRegister);
+    }
+
+    public void onClickEmailCheckBtn(View view){
+        return;
+    }
+
+    public void onClickNameCheckBtn(View view){
+        return;
     }
 
     public void onClickRegisterBtn(View view){
-        String email = idEtRegister.getText().toString();
-        String password = pwEtRegister.getText().toString();
+        String email = emailEditText.getText().toString();
+        String password = pwEditText.getText().toString();
+        String checkPassword = pwCheckEditText.getText().toString();
+        String username = nameEditText.getText().toString();
 
         firebaseAuth =  FirebaseAuth.getInstance();
 

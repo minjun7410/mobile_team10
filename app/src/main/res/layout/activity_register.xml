@@ -13,17 +13,33 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/user_id" />
+        android:text="@string/user_email" />
 
-    <EditText
-        android:id="@+id/idEtRegister"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:hint="@string/input_id" />
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/emailEtRegister"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="7"
+            android:layout_marginRight="15dp"
+            android:hint="@string/input_email" />
+
+        <Button
+            android:id="@+id/emailCheckBtnRegister"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="onClickEmailCheckBtn"
+            android:text="확인" />
+    </LinearLayout>
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginTop="10dp"
         android:text="@string/user_pw" />
 
     <EditText
@@ -37,33 +53,50 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginTop="10dp"
         android:text="@string/user_pw_re" />
 
     <EditText
-        android:id="@+id/pwReEtRegister"
+        android:id="@+id/pwCheckEtRegister"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="textPassword"
-        android:hint="@string/input_pw_re" />
+        android:hint="@string/input_pw_check" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginTop="10dp"
         android:text="@string/user_name" />
 
-    <EditText
-        android:id="@+id/nameEtRegister"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:hint="@string/input_name" />
+        android:orientation="horizontal">
+        <EditText
+            android:id="@+id/nameEtRegister"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="7"
+            android:layout_marginRight="15dp"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:hint="@string/input_name" />
+
+        <Button
+            android:id="@+id/nameCheckBtnRegister"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="onClickNameCheckBtn"
+            android:text="확인" />
+    </LinearLayout>
 
     <Button
         android:id="@+id/registerBtnRegister"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginTop="20dp"
         android:onClick="onClickRegisterBtn"
         android:text="@string/register" />
 

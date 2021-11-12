@@ -13,13 +13,13 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/user_id" />
+        android:text="@string/user_email" />
 
     <EditText
-        android:id="@+id/idEtLogin"
+        android:id="@+id/emailEtLogin"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:hint="@string/input_id" />
+        android:hint="@string/input_email" />
 
     <TextView
         android:layout_width="match_parent"
