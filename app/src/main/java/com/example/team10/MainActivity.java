@@ -22,7 +22,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
-    Button registerBtn;
+    Button plus_id_register;
     Button matchingBtn;
     Name_API_Thread apiThread;
 
@@ -32,20 +32,19 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        registerBtn = (Button) findViewById(R.id.registerBtnMain);
         matchingBtn = (Button) findViewById(R.id.matchingBtn);
+        plus_id_register = (Button) findViewById(R.id.plus_id_register);
+        onClickRegisterBtn(plus_id_register);
     }
 
-    public void onClickRegisterBtn(View view){
-        Toast.makeText(getApplicationContext(), "Click Id-register Button", Toast.LENGTH_SHORT).show();
-    }
 
-    public void onClickMatchingBtn(View view){
+
+    public void onClickMatchingBtn(View view) {
         Toast.makeText(getApplicationContext(), "Click Matching Button", Toast.LENGTH_SHORT).show();
-
+    }
+    public void onClickRegisterBtn(View view){
 
         //Dialog로 닉네임를 받아서 api를 통해 정보를 가져와 ImageView에 입력.
-        Button plus_id_register = (Button) findViewById(R.id.plus_id_register);
         plus_id_register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
