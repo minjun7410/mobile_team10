@@ -5,7 +5,7 @@ package com.example.team10;
 
 public class UserAccount {
     private String uid;
-    private String emailId;
+    private String email;
     private String password;
 
     public UserAccount() { }
@@ -18,12 +18,12 @@ public class UserAccount {
         this.uid = uid;
     }
 
-    public String getEmailId() {
-        return emailId;
+    public String getEmail() {
+        return email;
     }
 
-    public void setEmailId(String emailId) {
-        this.emailId = emailId;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getPassword() {

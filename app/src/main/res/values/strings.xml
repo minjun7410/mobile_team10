@@ -3,7 +3,7 @@
 
     <string name="user_email">이메일</string>
     <string name="user_pw">비밀번호</string>
-    <string name="user_pw_re">비밀번호 재입력</string>
+    <string name="user_pw_check">비밀번호 재입력</string>
     <string name="user_name">닉네임</string>
 
     <string name="input_email">이메일을 입력하세요.</string>
