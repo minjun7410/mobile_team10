@@ -21,6 +21,8 @@
         android:layout_height="match_parent"
         android:inputType="textEmailAddress"
         android:hint="@string/input_email" />
+        android:hint="@string/input_id"
+        tools:ignore="TouchTargetSizeCheck" />
 
     <TextView
         android:layout_width="match_parent"
@@ -33,6 +35,8 @@
         android:layout_height="match_parent"
         android:inputType="textPassword"
         android:hint="@string/input_pw" />
+        android:hint="@string/input_pw"
+        tools:ignore="TouchTargetSizeCheck" />
 
     <Button
         android:id="@+id/btnLogin_login"

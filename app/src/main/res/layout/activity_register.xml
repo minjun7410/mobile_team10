@@ -36,6 +36,12 @@
             android:onClick="onClickBtnEmailCheck"
             android:text="@string/ok" />
     </LinearLayout>
+    <EditText
+        android:id="@+id/idEtRegister"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:hint="@string/input_id"
+        tools:ignore="TouchTargetSizeCheck" />
 
     <TextView
         android:layout_width="match_parent"
@@ -48,8 +54,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
+        android:hint="@string/input_pw"
         android:inputType="textPassword"
-        android:hint="@string/input_pw" />
+        tools:ignore="TouchTargetSizeCheck" />
 
     <TextView
         android:layout_width="match_parent"
@@ -62,8 +69,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
+        android:hint="@string/input_pw_re"
         android:inputType="textPassword"
         android:hint="@string/input_pw_check" />
+        tools:ignore="TouchTargetSizeCheck" />
 
     <TextView
         android:layout_width="match_parent"
@@ -84,6 +93,14 @@
             android:ems="10"
             android:inputType="textPersonName"
             android:hint="@string/input_name" />
+    <EditText
+        android:id="@+id/nameEtRegister"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="@string/input_name"
+        android:inputType="textPersonName"
+        tools:ignore="TouchTargetSizeCheck" />
 
         <Button
             android:id="@+id/btnUsernameCheck_register"
