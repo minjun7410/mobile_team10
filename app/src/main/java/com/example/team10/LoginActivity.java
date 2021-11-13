@@ -35,6 +35,7 @@ public class LoginActivity extends AppCompatActivity {
         EtEmail = (EditText) findViewById(R.id.etEmail_login);
         EtPassword = (EditText) findViewById(R.id.etPassword_login);
 
+
     }
 
     public void onClickRegisterBtn(View view){

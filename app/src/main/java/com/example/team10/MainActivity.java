@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.View;
@@ -24,6 +25,7 @@ import android.widget.Toast;
 public class MainActivity extends AppCompatActivity {
     Button plus_id_register;
     Button matchingBtn;
+    Button chatBtn;
     Name_API_Thread apiThread;
 
 
@@ -31,13 +33,25 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        chatBtn = (Button) findViewById(R.id.chatBtn);
         matchingBtn = (Button) findViewById(R.id.matchingBtn);
         plus_id_register = (Button) findViewById(R.id.plus_id_register);
         onClickRegisterBtn(plus_id_register);
+
+        chatBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(),ChatActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
 
+    public void onClickChattingBtn(View view){
+        Intent intent = new Intent(this, ChatActivity.class);
+        startActivity(intent);
+    }
 
     public void onClickMatchingBtn(View view) {
         Toast.makeText(getApplicationContext(), "Click Matching Button", Toast.LENGTH_SHORT).show();
