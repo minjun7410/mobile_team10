@@ -10,19 +10,21 @@
     android:paddingRight="20dp"
     android:layout_gravity="center">
 
-    <Button
-        android:id="@+id/registerBtnMain"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:onClick="onClickRegisterBtn"
-        android:text="@string/register_game_id" />
 
-    <Button
-        android:id="@+id/matchingBtn"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:onClick="onClickMatchingBtn"
-        android:text="@string/matching_friend" />
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <include layout="@layout/id_register_item" />
+        <Button
+            android:id="@+id/plus_id_register"
+
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="@string/register_game_id"/>
+
+    </LinearLayout>
 
 </LinearLayout>

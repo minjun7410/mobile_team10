@@ -27,7 +27,8 @@
             android:layout_weight="7"
             android:layout_marginRight="15dp"
             android:inputType="textEmailAddress"
-            android:hint="@string/input_email" />
+            android:hint="@string/input_email"
+            tools:ignore="TouchTargetSizeCheck"/>
 
         <Button
             android:id="@+id/btnEmailCheck_register"
@@ -48,8 +49,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
+        android:hint="@string/input_pw"
         android:inputType="textPassword"
-        android:hint="@string/input_pw" />
+        tools:ignore="TouchTargetSizeCheck" />
 
     <TextView
         android:layout_width="match_parent"
@@ -64,6 +66,7 @@
         android:ems="10"
         android:inputType="textPassword"
         android:hint="@string/input_pw_check" />
+        tools:ignore="TouchTargetSizeCheck" />
 
     <TextView
         android:layout_width="match_parent"
@@ -83,7 +86,8 @@
             android:layout_marginRight="15dp"
             android:ems="10"
             android:inputType="textPersonName"
-            android:hint="@string/input_name" />
+            android:hint="@string/input_name"
+            tools:ignore="TouchTargetSizeCheck"/>
 
         <Button
             android:id="@+id/btnUsernameCheck_register"
