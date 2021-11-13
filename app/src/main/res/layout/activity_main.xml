@@ -23,6 +23,7 @@
 
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:onClick="onClickRegisterBtn"
             android:text="@string/register_game_id" />
 
         <Button
@@ -37,6 +38,13 @@
             android:layout_height="match_parent"
             android:onClick="onClickChattingBtn"
             android:text="@string/matching_friend" />
+
+        <Button
+            android:id="@+id/friendBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="onClickFriendBtn"
+            android:text="Button" />
 
     </LinearLayout>
 

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="350dp"
+    android:layout_height="130dp"
+    android:gravity="center"
+    android:background="@drawable/id_register_item"
+    android:id="@+id/friend_item"
+    >
+
+    <ImageView
+        android:id="@+id/user_icon"
+        android:layout_width="150dp"
+        android:layout_height="80dp"
+        android:layout_weight="1"
+        android:src="@drawable/garen"
+        />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_weight="5"
+        android:orientation="vertical"
+        android:textAlignment="gravity">
+
+        <TextView
+            android:id="@+id/user_nickname"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="TextView"
+            android:textColor="#006D44" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/user_level"
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="TextView"
+                android:textColor="#006D44" />
+
+            <TextView
+                android:id="@+id/user_tier"
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_weight="1"
+                android:text="TextView"
+                android:textColor="#006D44" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/user_mbti"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="TextView"
+            android:textColor="#006D44" />
+
+        <TextView
+            android:id="@+id/user_manner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="TextView"
+            android:textColor="#006D44" />
+
+    </LinearLayout>
+</LinearLayout>

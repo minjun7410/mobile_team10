@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.View;
@@ -14,6 +15,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,12 +24,17 @@ import org.json.JSONObject;
 import android.widget.Button;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
 public class MainActivity extends AppCompatActivity {
     Button plus_id_register;
     Button matchingBtn;
     Button chatBtn;
+    Button friendBtn;
     Name_API_Thread apiThread;
 
+    String register_file = "register_file";
+    SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +43,12 @@ public class MainActivity extends AppCompatActivity {
         chatBtn = (Button) findViewById(R.id.chatBtn);
         matchingBtn = (Button) findViewById(R.id.matchingBtn);
         plus_id_register = (Button) findViewById(R.id.plus_id_register);
-        onClickRegisterBtn(plus_id_register);
+        friendBtn = (Button) findViewById(R.id.friendBtn);
+
+        sharedPreferences = getSharedPreferences(register_file, 0);
+        if(!sharedPreferences.getString("nickname", "").equals("")){
+            register_by_nickname(sharedPreferences.getString("nickname", ""));
+        }
 
         chatBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -45,19 +57,53 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
     }
 
+    public void register_by_nickname(String value){
+        apiThread = new Name_API_Thread(value);
+        try {
+            apiThread.start();
+            apiThread.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
+        TextView user_nickname = (TextView) findViewById(R.id.user_nickname);
+        TextView user_level = (TextView) findViewById(R.id.user_level);
+        TextView user_tier = (TextView) findViewById(R.id.user_tier);
+        TextView user_mbti = (TextView) findViewById(R.id.user_mbti);
+        TextView user_manner = (TextView) findViewById(R.id.user_manner);
+
+        LinearLayout user_layout = (LinearLayout) findViewById(R.id.id_register_item);
+        plus_id_register.setVisibility(View.GONE);
+        user_layout.setVisibility(View.VISIBLE);
+
+        user_nickname.setText(value);
+        user_level.setText("Level: " + apiThread.getSummoners_info("level"));
+        user_tier.setText("Tier: " + apiThread.getSummoners_info("tier"));
+        user_mbti.setText("MBTI: INFT");
+        user_manner.setText("Manner: "+"SUCK");
+
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("nickname", value);
+        editor.commit();
+
+        ImageView user_icon = (ImageView) findViewById(R.id.user_icon);
+        user_icon.setImageBitmap(apiThread.getSummoners_bitmap());
+    }
     public void onClickChattingBtn(View view){
         Intent intent = new Intent(this, ChatActivity.class);
         startActivity(intent);
     }
-
+    public void onClickFriendBtn(View view){
+        Intent intent = new Intent(this, FriendActivity.class);
+        startActivity(intent);
+    }
     public void onClickMatchingBtn(View view) {
         Toast.makeText(getApplicationContext(), "Click Matching Button", Toast.LENGTH_SHORT).show();
     }
     public void onClickRegisterBtn(View view){
-
         //Dialog로 닉네임를 받아서 api를 통해 정보를 가져와 ImageView에 입력.
         plus_id_register.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -100,8 +146,12 @@ public class MainActivity extends AppCompatActivity {
                                 user_nickname.setText(value);
                                 user_level.setText("Level: " + apiThread.getSummoners_info("level"));
                                 user_tier.setText("Tier: " + apiThread.getSummoners_info("tier"));
-                                user_mbti.setText("MBTI: INFT");
-                                user_manner.setText("Manner: "+"SUCK");
+                                user_mbti.setText("MBTI: "+ apiThread.getSummoners_info("mbti"));
+                                user_manner.setText("Manner: "+ apiThread.getSummoners_info("manner"));
+
+                                SharedPreferences.Editor editor = sharedPreferences.edit();
+                                editor.putString("nickname", value);
+                                editor.commit();
 
                                 ImageView user_icon = (ImageView) findViewById(R.id.user_icon);
                                 user_icon.setImageBitmap(apiThread.getSummoners_bitmap());
