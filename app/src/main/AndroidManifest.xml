@@ -28,10 +28,9 @@
         <activity
             android:name=".LoginActivity"
             android:exported="false"/>
-        <activity android:name=".MainActivity" />
+        <activity android:name=".FragActivity" />
         <activity android:name=".RegisterActivity" />
         <activity android:name=".ChatActivity" />
-        <activity android:name=".FriendActivity" />
         <activity android:name=".UserActivity" />
     </application>
 
