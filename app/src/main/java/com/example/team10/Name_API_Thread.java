@@ -1,6 +1,7 @@
 package com.example.team10;
 
 
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Log;
@@ -22,7 +23,7 @@ import java.net.URLConnection;
 
 class Name_API_Thread extends Thread{
     //api key 매번 갱신
-    String TOKEN = "RGAPI-dc303a2d-f91c-4bb2-8c7a-2c79adbf5253";
+    String TOKEN = "RGAPI-bae89261-d8a8-4eb8-b9ac-80af2da19acd";
     private String Summoners_name;
     private String Summoners_id;
     private int Summoners_level;
@@ -33,6 +34,7 @@ class Name_API_Thread extends Thread{
     private int Summoners_icon;
     private Bitmap Summoners_bitmap;
 
+    public Name_API_Thread(){}
     public Name_API_Thread(String Summoners_name){
         this.Summoners_name = Summoners_name;
     }
@@ -116,6 +118,8 @@ class Name_API_Thread extends Thread{
             Log.d("Success: ", "get info");
         } catch (JSONException e) {
             e.printStackTrace();
+        } catch (java.lang.NullPointerException e){
+            is_success = false;
         }
     }
     public Bitmap getImageFromUrl(String urlStr){
@@ -146,15 +150,17 @@ class Name_API_Thread extends Thread{
             case "name":
                 return Summoners_name;
             case "tier":
+                if(Summoners_tier == null){Summoners_tier = "X";}
                 return Summoners_tier;
             case "rank":
+                if(Summoners_rank == null){Summoners_rank = "X";}
                 return Summoners_rank;
             case "level":
                 return String.valueOf(Summoners_level);
             case "icon":
                 return String.valueOf(Summoners_icon);
             default:
-                return "Dont care";
+                return "Dont know";
         }
     }
 

@@ -5,4 +5,8 @@
         <item name="android:typeface">monospace</item>
         <item name="android:background">#006D44</item>
     </style>
+    <style name="SplashTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="windowNoTitle">true</item>
+        <item name="windowActionBar">false</item>
+    </style>
 </resources>
