@@ -40,20 +40,34 @@
         android:inputType="textPassword"
         tools:ignore="TouchTargetSizeCheck" />
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="10dp"
-        android:text="@string/user_pw_check" />
-
-    <EditText
-        android:id="@+id/etPasswordCheck_register"
+    <LinearLayout
+        android:id="@+id/passwordCheckContainer_register"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="@string/input_pw_check"
-        android:inputType="textPassword"
-        tools:ignore="TouchTargetSizeCheck" />
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="10dp"
+            android:text="@string/user_pw_check" />
+
+        <EditText
+            android:id="@+id/etPasswordCheck_register"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="@string/input_pw_check"
+            android:inputType="textPassword"
+            tools:ignore="TouchTargetSizeCheck" />
+
+        <TextView
+            android:id="@+id/tvPasswordCheck_register"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="10dp" />
+    </LinearLayout>
+
 
     <Button
         android:id="@+id/btnRegister_register"
