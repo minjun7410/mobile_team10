@@ -25,8 +25,6 @@ public class RegisterActivity extends AppCompatActivity {
     final FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     Button BtnRegister;
-    Button BtnEmailCheck;
-    Button BtnNameCheck;
 
     EditText EtEmail;
     EditText EtPassword;
@@ -39,21 +37,10 @@ public class RegisterActivity extends AppCompatActivity {
         setContentView(R.layout.activity_register);
 
         BtnRegister = (Button) findViewById(R.id.btnRegister_register);
-        BtnEmailCheck = (Button) findViewById(R.id.btnEmailCheck_register);
-        BtnNameCheck = (Button) findViewById(R.id.btnUsernameCheck_register);
 
         EtEmail = (EditText) findViewById(R.id.etEmail_register);
         EtPassword = (EditText) findViewById(R.id.etPassword_register);
         EtPasswordCheck = (EditText) findViewById(R.id.etPasswordCheck_register);
-        EtUsername = (EditText) findViewById(R.id.etUsername_register);
-    }
-
-    public void onClickBtnEmailCheck(View view){
-        Toast.makeText(RegisterActivity.this, "Click Email check button", Toast.LENGTH_SHORT).show();
-    }
-
-    public void onClickBtnNameCheck(View view){
-        Toast.makeText(RegisterActivity.this, "Click username check button", Toast.LENGTH_SHORT).show();
     }
 
     public void onClickBtnRegister(View view){
