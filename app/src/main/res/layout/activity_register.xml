@@ -15,33 +15,15 @@
         android:layout_height="match_parent"
         android:text="@string/user_email" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <EditText
-            android:id="@+id/etEmail_register"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="7"
-            android:layout_marginRight="15dp"
-            android:inputType="textEmailAddress"
-            android:hint="@string/input_email" />
-
-        <Button
-            android:id="@+id/btnEmailCheck_register"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="onClickBtnEmailCheck"
-            android:text="@string/ok" />
-    </LinearLayout>
     <EditText
-        android:id="@+id/idEtRegister"
+        android:id="@+id/etEmail_register"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_weight="7"
+        android:layout_marginRight="15dp"
+        android:inputType="textEmailAddress"
         android:hint="@string/input_email"
-        tools:ignore="TouchTargetSizeCheck" />
+        tools:ignore="TouchTargetSizeCheck"/>
 
     <TextView
         android:layout_width="match_parent"
@@ -58,57 +40,34 @@
         android:inputType="textPassword"
         tools:ignore="TouchTargetSizeCheck" />
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="10dp"
-        android:text="@string/user_pw_check" />
-
-    <EditText
-        android:id="@+id/etPasswordCheck_register"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="@string/input_pw_check"
-        android:inputType="textPassword"
-        tools:ignore="TouchTargetSizeCheck" />
-        tools:ignore="TouchTargetSizeCheck" />
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="10dp"
-        android:text="@string/user_name" />
-
     <LinearLayout
+        android:id="@+id/passwordCheckContainer_register"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="10dp"
+            android:text="@string/user_pw_check" />
+
         <EditText
-            android:id="@+id/etUsername_register"
+            android:id="@+id/etPasswordCheck_register"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="7"
-            android:layout_marginRight="15dp"
             android:ems="10"
-            android:inputType="textPersonName"
-            android:hint="@string/input_name" />
-    <EditText
-        android:id="@+id/nameEtRegister"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="@string/input_name"
-        android:inputType="textPersonName"
-        tools:ignore="TouchTargetSizeCheck" />
+            android:hint="@string/input_pw_check"
+            android:inputType="textPassword"
+            tools:ignore="TouchTargetSizeCheck" />
 
-        <Button
-            android:id="@+id/btnUsernameCheck_register"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="onClickBtnNameCheck"
-            android:text="@string/ok" />
+        <TextView
+            android:id="@+id/tvPasswordCheck_register"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="10dp" />
     </LinearLayout>
+
 
     <Button
         android:id="@+id/btnRegister_register"

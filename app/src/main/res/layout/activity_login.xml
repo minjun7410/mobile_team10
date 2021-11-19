@@ -20,8 +20,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:inputType="textEmailAddress"
-        android:hint="@string/input_email" />
-        android:hint="@string/input_id"
+        android:hint="@string/input_email"
         tools:ignore="TouchTargetSizeCheck" />
 
     <TextView
@@ -34,7 +33,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:inputType="textPassword"
-        android:hint="@string/input_pw" />
         android:hint="@string/input_pw"
         tools:ignore="TouchTargetSizeCheck" />
 

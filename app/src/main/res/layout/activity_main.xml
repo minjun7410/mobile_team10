@@ -45,6 +45,7 @@
             android:layout_height="wrap_content"
             android:onClick="onClickFriendBtn"
             android:text="Button" />
+            android:text="@string/register_game_id"/>
 
     </LinearLayout>
 

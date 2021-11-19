@@ -31,7 +31,7 @@ public class ChatRoomActivity extends AppCompatActivity {
     InetAddress serverAddr;
     Socket socket;
     PrintWriter sendWriter;
-    private String ip = "각자의 ip주소 입력";
+    private String ip = "172.30.1.39";
     private int port = 8888;
 
     TextView textView;
