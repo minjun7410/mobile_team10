@@ -6,7 +6,6 @@ package com.example.team10;
 public class UserAccount {
     private String uid;
     private String email;
-    private String password;
 
     public UserAccount() { }
 
@@ -26,11 +25,4 @@ public class UserAccount {
         this.email = email;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
 }

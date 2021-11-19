@@ -101,11 +101,12 @@ public class RegisterActivity extends AppCompatActivity {
                             FirebaseUser user = firebaseAuth.getCurrentUser();
 
                             HashMap<Object,String> userInfo = new HashMap<>();
-                            userInfo.put("uid", user.getUid());
+//                            userInfo.put("uid", user.getUid());
                             userInfo.put("email", user.getEmail());
 
                             // firestore cloud database
-                            db.collection("users").add(userInfo)
+                            db.collection("users").document(user.getUid())
+                                    .set(userInfo)
                                     .addOnFailureListener(new OnFailureListener() {
                                         @Override
                                         public void onFailure(@NonNull Exception e) {

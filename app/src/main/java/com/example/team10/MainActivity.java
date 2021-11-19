@@ -21,6 +21,8 @@ public class MainActivity extends AppCompatActivity {
     Button matchingBtn;
     Button chatBtn;
     Button friendBtn;
+    Button userInfo;
+
     Name_API_Thread apiThread;
 
     String register_file = "register_file";
@@ -34,6 +36,8 @@ public class MainActivity extends AppCompatActivity {
         matchingBtn = (Button) findViewById(R.id.matchingBtn);
         plus_id_register = (Button) findViewById(R.id.plus_id_register);
         friendBtn = (Button) findViewById(R.id.friendBtn);
+
+        userInfo = (Button) findViewById(R.id.BtnUserInfo);
 
         sharedPreferences = getSharedPreferences(register_file, 0);
         if(!sharedPreferences.getString("nickname", "").equals("")){
@@ -92,6 +96,11 @@ public class MainActivity extends AppCompatActivity {
     }
     public void onClickMatchingBtn(View view) {
         Toast.makeText(getApplicationContext(), "Click Matching Button", Toast.LENGTH_SHORT).show();
+    }
+
+    public void onClickUserInfoBtn(View view){
+        Intent intent = new Intent(this, UserActivity.class);
+        startActivity(intent);
     }
     public void onClickRegisterBtn(View view){
         //Dialog로 닉네임를 받아서 api를 통해 정보를 가져와 ImageView에 입력.

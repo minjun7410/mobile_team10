@@ -32,12 +32,13 @@
             android:layout_height="match_parent"
             android:onClick="onClickMatchingBtn"
             android:text="@string/matching_friend" />
+
         <Button
             android:id="@+id/chatBtn"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:onClick="onClickChattingBtn"
-            android:text="@string/matching_friend" />
+            android:text="채팅" />
 
         <Button
             android:id="@+id/friendBtn"
@@ -45,7 +46,14 @@
             android:layout_height="wrap_content"
             android:onClick="onClickFriendBtn"
             android:text="Button" />
-            android:text="@string/register_game_id"/>
+
+        <Button
+            android:id="@+id/BtnUserInfo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="onClickUserInfoBtn"
+            android:text="회원 정보" />
+        android:text="@string/register_game_id"/>
 
     </LinearLayout>
 
