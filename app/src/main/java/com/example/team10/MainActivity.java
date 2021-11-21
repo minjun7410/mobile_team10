@@ -41,7 +41,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 
-public class MainActivity extends Fragment implements View.OnClickListener{
+public class MainActivity extends Fragment{
     private FirebaseAuth firebaseAuth;
     final FirebaseFirestore db = FirebaseFirestore.getInstance();
 
@@ -68,8 +68,6 @@ public class MainActivity extends Fragment implements View.OnClickListener{
         chatBtn = (Button) root.findViewById(R.id.chatBtn);
         matchingBtn = (Button) root.findViewById(R.id.matchingBtn);
         plus_id_register = (Button) root.findViewById(R.id.plus_id_register);
-        friendBtn = (Button) root.findViewById(R.id.friendBtn);
-        userInfo = (Button) root.findViewById(R.id.BtnUserInfo);
 
 //        sharedPreferences = getSharedPreferences(register_file, 0);
 //        if(!sharedPreferences.getString("nickname", "").equals("")){
@@ -80,7 +78,7 @@ public class MainActivity extends Fragment implements View.OnClickListener{
         db.collection("lol").document(uid).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                 DocumentSnapshot document = task.getResult();
-                if (document.exists()){
+                if (document.exists()) {
                     register_by_nickname(document.getData().get("name").toString());
                     setTextView_register_by_nickname();
                 }
@@ -97,10 +95,16 @@ public class MainActivity extends Fragment implements View.OnClickListener{
             @Override
             public void onClick(View view) {
                 onClickMatchingBtn(view);
-
+            }
+        });
+        plus_id_register.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onClickRegisterBtn(view);
+            }
         });
         return root;
-        }
+    }
 
 
     /* String <=> Bitmap */
@@ -163,7 +167,7 @@ public class MainActivity extends Fragment implements View.OnClickListener{
                 .set(lolUserInfo).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity().getApplicationContext(), e.toString(), Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -190,15 +194,15 @@ public class MainActivity extends Fragment implements View.OnClickListener{
                     String tier = lolUserInfo.get("tier").toString();
                     Bitmap icon = StringToBitmap(lolUserInfo.get("icon").toString());
 
-                    LinearLayout user_layout = (LinearLayout) findViewById(R.id.id_register_item);
+                    LinearLayout user_layout = (LinearLayout) getView().findViewById(R.id.id_register_item);
                     plus_id_register.setVisibility(View.GONE);
                     user_layout.setVisibility(View.VISIBLE);
 
-                    TextView user_nickname = (TextView) findViewById(R.id.user_nickname);
-                    TextView user_level = (TextView) findViewById(R.id.user_level);
-                    TextView user_tier = (TextView) findViewById(R.id.user_tier);
-                    TextView user_mbti = (TextView) findViewById(R.id.user_mbti);
-                    TextView user_manner = (TextView) findViewById(R.id.user_manner);
+                    TextView user_nickname = (TextView) getView().findViewById(R.id.user_nickname);
+                    TextView user_level = (TextView) getView().findViewById(R.id.user_level);
+                    TextView user_tier = (TextView) getView().findViewById(R.id.user_tier);
+                    TextView user_mbti = (TextView) getView().findViewById(R.id.user_mbti);
+                    TextView user_manner = (TextView) getView().findViewById(R.id.user_manner);
 
                     user_nickname.setText(name);
                     user_level.setText("Level: " + level);
@@ -206,7 +210,7 @@ public class MainActivity extends Fragment implements View.OnClickListener{
                     user_mbti.setText("MBTI: "+ "mbti");
                     user_manner.setText("Manner: "+ "manner");
 
-                    ImageView user_icon = (ImageView) findViewById(R.id.user_icon);
+                    ImageView user_icon = (ImageView) getView().findViewById(R.id.user_icon);
                     user_icon.setImageBitmap(icon);
                 }
             }
@@ -219,18 +223,10 @@ public class MainActivity extends Fragment implements View.OnClickListener{
         Intent intent = new Intent(root.getContext(), ChatActivity.class);
         startActivity(intent);
     }
-    public void onClickFriendBtn(View view){
-        FragActivity activity = (FragActivity) root.getContext();
-        activity.onFragmentChanged(1);
-    }
     public void onClickMatchingBtn(View view) {
         Toast.makeText(root.getContext().getApplicationContext(), "Click Matching Button", Toast.LENGTH_SHORT).show();
     }
 
-    public void onClickUserInfoBtn(View view){
-        Intent intent = new Intent(root.getContext(), UserActivity.class);
-        startActivity(intent);
-    }
     public void onClickRegisterBtn(View view){
         //Dialog로 닉네임를 받아서 api를 통해 정보를 가져와 ImageView에 입력.
         plus_id_register.setOnClickListener(new View.OnClickListener() {
@@ -249,7 +245,7 @@ public class MainActivity extends Fragment implements View.OnClickListener{
                                 String value = et.getText().toString();
                                 /* 롤 API 사용자 정보 호출 */
                                 if (!register_by_nickname(value)){
-                                    Toast.makeText(getApplicationContext(), "존재하지않는 사용자입니다.", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(root.getContext().getApplicationContext(), "존재하지않는 사용자입니다.", Toast.LENGTH_SHORT).show();
                                     return;
                                 }
                                 setTextView_register_by_nickname();
