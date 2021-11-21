@@ -3,7 +3,9 @@ package com.example.team10;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -36,6 +38,13 @@ public class LoginActivity extends AppCompatActivity {
 
         EtEmail = (EditText) findViewById(R.id.etEmail_login);
         EtPassword = (EditText) findViewById(R.id.etPassword_login);
+
+        firebaseAuth =  FirebaseAuth.getInstance();
+        if (firebaseAuth.getCurrentUser() != null) {
+            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+            startActivity(intent);
+            finish();
+        }
     }
 
     public void onClickRegisterBtn(View view){
@@ -44,8 +53,6 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void onClickLoginBtn(View view){
-        firebaseAuth =  FirebaseAuth.getInstance();
-
         String email = EtEmail.getText().toString();
         String password = EtPassword.getText().toString();
 
@@ -61,7 +68,6 @@ public class LoginActivity extends AppCompatActivity {
                 }
             }
         });
-
 
     }
 
