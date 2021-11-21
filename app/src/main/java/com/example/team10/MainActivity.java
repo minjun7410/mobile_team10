@@ -1,12 +1,17 @@
 package com.example.team10;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.util.Base64;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -15,8 +20,25 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.io.ByteArrayOutputStream;
+import java.util.HashMap;
+import java.util.Map;
+
 
 public class MainActivity extends AppCompatActivity {
+    private FirebaseAuth firebaseAuth;
+    final FirebaseFirestore db = FirebaseFirestore.getInstance();
+
     Button plus_id_register;
     Button matchingBtn;
     Button chatBtn;
@@ -25,13 +47,19 @@ public class MainActivity extends AppCompatActivity {
 
     Name_API_Thread apiThread;
 
-    String register_file = "register_file";
-    SharedPreferences sharedPreferences;
+
+//    String register_file = "register_file";
+//    SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        firebaseAuth = FirebaseAuth.getInstance();
+        FirebaseUser currentUser = firebaseAuth.getCurrentUser();
+        String uid = currentUser.getUid();
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         chatBtn = (Button) findViewById(R.id.chatBtn);
         matchingBtn = (Button) findViewById(R.id.matchingBtn);
         plus_id_register = (Button) findViewById(R.id.plus_id_register);
@@ -39,22 +67,53 @@ public class MainActivity extends AppCompatActivity {
 
         userInfo = (Button) findViewById(R.id.BtnUserInfo);
 
-        sharedPreferences = getSharedPreferences(register_file, 0);
-        if(!sharedPreferences.getString("nickname", "").equals("")){
-            register_by_nickname(sharedPreferences.getString("nickname", ""));
-        }
+//        sharedPreferences = getSharedPreferences(register_file, 0);
+//        if(!sharedPreferences.getString("nickname", "").equals("")){
+//            register_by_nickname(sharedPreferences.getString("nickname", ""));
+//            setTextView_register_by_nickname();
+//        }
 
-        chatBtn.setOnClickListener(new View.OnClickListener() {
+        db.collection("lol").document(uid).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(),ChatActivity.class);
-                startActivity(intent);
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                DocumentSnapshot document = task.getResult();
+                if (document.exists()){
+                    register_by_nickname(document.getData().get("name").toString());
+                    setTextView_register_by_nickname();
+                }
             }
         });
-
     }
 
-    public void register_by_nickname(String value){
+
+    /* String <=> Bitmap */
+    public static Bitmap StringToBitmap(String encodedString) {
+        try {
+            byte[] encodeByte = Base64.decode(encodedString, Base64.DEFAULT);
+            Bitmap bitmap = BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
+            return bitmap;
+        } catch (Exception e) {
+            e.getMessage();
+            return null;
+        }
+    }
+    public static String BitmapToString(Bitmap bitmap) {
+        if (bitmap == null) {
+            return "";
+        }
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 70, baos);
+        byte[] bytes = baos.toByteArray();
+        String temp = Base64.encodeToString(bytes, Base64.DEFAULT);
+        return temp;
+    }
+    public static byte[] BitmapToByteArray(Bitmap bitmap) {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 70, baos);
+        return baos.toByteArray();
+    }
+
+    public boolean register_by_nickname(String value){
         apiThread = new Name_API_Thread(value);
         try {
             apiThread.start();
@@ -63,29 +122,78 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        TextView user_nickname = (TextView) findViewById(R.id.user_nickname);
-        TextView user_level = (TextView) findViewById(R.id.user_level);
-        TextView user_tier = (TextView) findViewById(R.id.user_tier);
-        TextView user_mbti = (TextView) findViewById(R.id.user_mbti);
-        TextView user_manner = (TextView) findViewById(R.id.user_manner);
+        if(apiThread.getSummoners_info("is_success") == "false"){ return false; }
 
-        LinearLayout user_layout = (LinearLayout) findViewById(R.id.id_register_item);
-        plus_id_register.setVisibility(View.GONE);
-        user_layout.setVisibility(View.VISIBLE);
+        String nickname = value;
+        String level = apiThread.getSummoners_info("level");
+        String tier = apiThread.getSummoners_info("tier");
+        Bitmap icon = apiThread.getSummoners_bitmap();
+        String sicon = BitmapToString(icon);
 
-        user_nickname.setText(value);
-        user_level.setText("Level: " + apiThread.getSummoners_info("level"));
-        user_tier.setText("Tier: " + apiThread.getSummoners_info("tier"));
-        user_mbti.setText("MBTI: INFT");
-        user_manner.setText("Manner: "+"SUCK");
+        HashMap<Object,String> lolUserInfo = new HashMap<>();
+        lolUserInfo.put("name", nickname);
+        lolUserInfo.put("level", level);
+        lolUserInfo.put("tier", tier);
+        lolUserInfo.put("icon", sicon);
 
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString("nickname", value);
-        editor.commit();
+        firebaseAuth = FirebaseAuth.getInstance();
+        FirebaseUser currentUser = firebaseAuth.getCurrentUser();
+        String uid = currentUser.getUid();
 
-        ImageView user_icon = (ImageView) findViewById(R.id.user_icon);
-        user_icon.setImageBitmap(apiThread.getSummoners_bitmap());
+        db.collection("lol").document(uid)
+                .set(lolUserInfo).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_SHORT).show();
+            }
+        });
+
+//        SharedPreferences.Editor editor = sharedPreferences.edit();
+//        editor.putString("nickname", value);
+//        editor.commit();
+
+        return true;
     }
+    public void setTextView_register_by_nickname(){
+        firebaseAuth = FirebaseAuth.getInstance();
+        FirebaseUser currentUser = firebaseAuth.getCurrentUser();
+        String uid = currentUser.getUid();
+
+        db.collection("lol").document(uid).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @SuppressLint("SetTextI18n")
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                DocumentSnapshot document = task.getResult();
+                if (document.exists()){
+                    Map<String, Object> lolUserInfo = document.getData();
+                    String name = lolUserInfo.get("name").toString();
+                    String level = lolUserInfo.get("level").toString();
+                    String tier = lolUserInfo.get("tier").toString();
+                    Bitmap icon = StringToBitmap(lolUserInfo.get("icon").toString());
+
+                    LinearLayout user_layout = (LinearLayout) findViewById(R.id.id_register_item);
+                    plus_id_register.setVisibility(View.GONE);
+                    user_layout.setVisibility(View.VISIBLE);
+
+                    TextView user_nickname = (TextView) findViewById(R.id.user_nickname);
+                    TextView user_level = (TextView) findViewById(R.id.user_level);
+                    TextView user_tier = (TextView) findViewById(R.id.user_tier);
+                    TextView user_mbti = (TextView) findViewById(R.id.user_mbti);
+                    TextView user_manner = (TextView) findViewById(R.id.user_manner);
+
+                    user_nickname.setText(name);
+                    user_level.setText("Level: " + level);
+                    user_tier.setText("Tier: " + tier);
+                    user_mbti.setText("MBTI: "+ "mbti");
+                    user_manner.setText("Manner: "+ "manner");
+
+                    ImageView user_icon = (ImageView) findViewById(R.id.user_icon);
+                    user_icon.setImageBitmap(icon);
+                }
+            }
+        });
+    }
+
     public void onClickChattingBtn(View view){
         Intent intent = new Intent(this, ChatActivity.class);
         startActivity(intent);
@@ -118,42 +226,12 @@ public class MainActivity extends AppCompatActivity {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 String value = et.getText().toString();
-                                //롤 닉네임으로 사용자의 id, level 티어, 승패를 받아온다.
-                                apiThread = new Name_API_Thread(value);
-                                try {
-                                    apiThread.start();
-                                    apiThread.join();
-
-                                } catch (InterruptedException e) {
-                                    e.printStackTrace();
-                                }
-                                //만약 아이디가 없는 아이디라면 Toast로 메시지 도시하고 중단.
-                                if(apiThread.getSummoners_info("is_success") == "false"){
-                                    Toast.makeText(getApplicationContext(), "Wrong NickName!!", Toast.LENGTH_SHORT).show();
+                                /* 롤 API 사용자 정보 호출 */
+                                if (!register_by_nickname(value)){
+                                    Toast.makeText(getApplicationContext(), "존재하지않는 사용자입니다.", Toast.LENGTH_SHORT).show();
                                     return;
                                 }
-                                TextView user_nickname = (TextView) findViewById(R.id.user_nickname);
-                                TextView user_level = (TextView) findViewById(R.id.user_level);
-                                TextView user_tier = (TextView) findViewById(R.id.user_tier);
-                                TextView user_mbti = (TextView) findViewById(R.id.user_mbti);
-                                TextView user_manner = (TextView) findViewById(R.id.user_manner);
-
-                                LinearLayout user_layout = (LinearLayout) findViewById(R.id.id_register_item);
-                                plus_id_register.setVisibility(View.GONE);
-                                user_layout.setVisibility(View.VISIBLE);
-
-                                user_nickname.setText(value);
-                                user_level.setText("Level: " + apiThread.getSummoners_info("level"));
-                                user_tier.setText("Tier: " + apiThread.getSummoners_info("tier"));
-                                user_mbti.setText("MBTI: "+ apiThread.getSummoners_info("mbti"));
-                                user_manner.setText("Manner: "+ apiThread.getSummoners_info("manner"));
-
-                                SharedPreferences.Editor editor = sharedPreferences.edit();
-                                editor.putString("nickname", value);
-                                editor.commit();
-
-                                ImageView user_icon = (ImageView) findViewById(R.id.user_icon);
-                                user_icon.setImageBitmap(apiThread.getSummoners_bitmap());
+                                setTextView_register_by_nickname();
                             }
                         });
                 AlertDialog dialog = alt_blt.create();
