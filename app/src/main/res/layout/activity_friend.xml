@@ -3,10 +3,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_margin="20dp"
     >
 
     <ListView
         android:id="@+id/FriendListView"
-        android:layout_width="409dp"
-        android:layout_height="729dp" />
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:dividerHeight="15dp"
+        android:divider="#ffffff"
+        />
 </LinearLayout>

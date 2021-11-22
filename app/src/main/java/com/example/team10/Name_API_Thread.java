@@ -153,7 +153,7 @@ class Name_API_Thread extends Thread{
                 if(Summoners_tier == null){Summoners_tier = "X";}
                 return Summoners_tier;
             case "rank":
-                if(Summoners_rank == null){Summoners_rank = "X";}
+                if(Summoners_rank == null){Summoners_rank = "";}
                 return Summoners_rank;
             case "level":
                 return String.valueOf(Summoners_level);

@@ -60,7 +60,7 @@ public class FriendAdapter extends BaseAdapter {
 
         user_nickname.setText(value);
         user_level.setText("Level: " + apiThread.getSummoners_info("level"));
-        user_tier.setText("Tier: " + apiThread.getSummoners_info("tier"));
+        user_tier.setText("Tier: " + apiThread.getSummoners_info("tier") + " " + apiThread.getSummoners_info("rank"));
         user_mbti.setText("MBTI: " + apiThread.getSummoners_info("mbti"));
         user_manner.setText("Manner: "+apiThread.getSummoners_info("manner"));
 

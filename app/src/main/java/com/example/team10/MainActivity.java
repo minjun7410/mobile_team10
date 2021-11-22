@@ -150,6 +150,7 @@ public class MainActivity extends Fragment{
         String nickname = value;
         String level = apiThread.getSummoners_info("level");
         String tier = apiThread.getSummoners_info("tier");
+        String rank = apiThread.getSummoners_info("rank");
         Bitmap icon = apiThread.getSummoners_bitmap();
         String sicon = BitmapToString(icon);
 
@@ -158,6 +159,8 @@ public class MainActivity extends Fragment{
         lolUserInfo.put("level", level);
         lolUserInfo.put("tier", tier);
         lolUserInfo.put("icon", sicon);
+        lolUserInfo.put("rank", rank);
+
 
         firebaseAuth = FirebaseAuth.getInstance();
         FirebaseUser currentUser = firebaseAuth.getCurrentUser();
@@ -192,6 +195,7 @@ public class MainActivity extends Fragment{
                     String name = lolUserInfo.get("name").toString();
                     String level = lolUserInfo.get("level").toString();
                     String tier = lolUserInfo.get("tier").toString();
+                    String rank = lolUserInfo.get("rank").toString();
                     Bitmap icon = StringToBitmap(lolUserInfo.get("icon").toString());
 
                     LinearLayout user_layout = (LinearLayout) getView().findViewById(R.id.id_register_item);
@@ -206,12 +210,18 @@ public class MainActivity extends Fragment{
 
                     user_nickname.setText(name);
                     user_level.setText("Level: " + level);
-                    user_tier.setText("Tier: " + tier);
+                    user_tier.setText("Tier: " + tier + " " + rank);
                     user_mbti.setText("MBTI: "+ "mbti");
                     user_manner.setText("Manner: "+ "manner");
 
                     ImageView user_icon = (ImageView) getView().findViewById(R.id.user_icon);
                     user_icon.setImageBitmap(icon);
+
+
+                    LinearLayout.LayoutParams mLayoutParams = (LinearLayout.LayoutParams) user_layout.getLayoutParams();
+                    mLayoutParams.bottomMargin = 100;
+                    user_layout.setLayoutParams(mLayoutParams);
+
                 }
             }
         });

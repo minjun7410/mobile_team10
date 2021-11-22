@@ -31,13 +31,13 @@ public class FriendActivity extends Fragment {
     public void onStart() {
         super.onStart();
 
-        Log.d("FriendActivity", "Successful");
+
 
         FriendListView = getView().findViewById(R.id.FriendListView);
         friendlist = new ArrayList<Friend>();
         friendlist.add(new Friend("hide on bush"));
-        friendlist.add(new Friend("Thal"));
-        friendlist.add(new Friend("추남신명철"));
+        friendlist.add(new Friend("송민준"));
+        friendlist.add(new Friend("CloudTemplar KR"));
         friendAdapter = new FriendAdapter(friendlist, getActivity().getApplicationContext());
         FriendListView.setAdapter(friendAdapter);
     }
