@@ -1,10 +1,13 @@
 package com.example.team10;
 
 import android.os.Bundle;
+import android.util.Log;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.firestore.auth.User;
@@ -14,13 +17,21 @@ public class FragActivity extends AppCompatActivity {
     MainActivity mainActivity;
     UserActivity userActivity;
 
-    int present_fragment = 0;
+    private FragmentManager fragmentManager;
+    private FragmentTransaction fragmentTransaction;
+
+    int present_fragment = 3;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_frag);
 
-        mainActivity = (MainActivity) getSupportFragmentManager().findFragmentById(R.id.fragment);
+        fragmentManager = getSupportFragmentManager();
+        fragmentTransaction = fragmentManager.beginTransaction();
+
+
+        mainActivity = (MainActivity) fragmentManager.findFragmentById(R.id.fragment);
+        fragmentTransaction.commit();
         friendActivity = new FriendActivity();
         userActivity = new UserActivity();
         //하단 네비게이션 메뉴의 아이템을 누를 때마다 해당 동작을 실행한다.
@@ -39,18 +50,24 @@ public class FragActivity extends AppCompatActivity {
             }
             return true;
         });
+
+
+
     }
     public void onFragmentChanged(int index) {
-        if (index == present_fragment){}
-        else if (index == 0) {
-            getSupportFragmentManager().beginTransaction().replace(R.id.container, mainActivity).commit();
-        }
-        else if (index == 1) {
-            getSupportFragmentManager().beginTransaction().replace(R.id.container, friendActivity).commit(); }
-        else if (index == 2) {
-            getSupportFragmentManager().beginTransaction().replace(R.id.container, userActivity).commit();
+
+        fragmentManager = getSupportFragmentManager();
+        fragmentTransaction = fragmentManager.beginTransaction();
+        if (index == 0) {
+            fragmentTransaction.replace(R.id.container, mainActivity);
+            fragmentTransaction.commit();
+        } else if (index == 1) {
+            fragmentTransaction.replace(R.id.container, friendActivity);
+            fragmentTransaction.commit();
+        } else if (index == 2) {
+            fragmentTransaction.replace(R.id.container, userActivity);
+            fragmentTransaction.commit();
         }
         present_fragment = index;
     }
-
 }
