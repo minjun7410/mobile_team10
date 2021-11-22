@@ -47,7 +47,7 @@ public class MainActivity extends Fragment{
 
     Button plus_id_register;
     Button matchingBtn;
-    Button chatBtn;
+
     Button friendBtn;
     Button userInfo;
 
@@ -65,7 +65,6 @@ public class MainActivity extends Fragment{
         FirebaseUser currentUser = firebaseAuth.getCurrentUser();
         String uid = currentUser.getUid();
 
-        chatBtn = (Button) root.findViewById(R.id.chatBtn);
         matchingBtn = (Button) root.findViewById(R.id.matchingBtn);
         plus_id_register = (Button) root.findViewById(R.id.plus_id_register);
 
@@ -85,12 +84,7 @@ public class MainActivity extends Fragment{
             }
 
         });
-        chatBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onClickChattingBtn(v);
-            }
-        });
+
         matchingBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -198,15 +192,15 @@ public class MainActivity extends Fragment{
                     String rank = lolUserInfo.get("rank").toString();
                     Bitmap icon = StringToBitmap(lolUserInfo.get("icon").toString());
 
-                    LinearLayout user_layout = (LinearLayout) getView().findViewById(R.id.id_register_item);
+                    LinearLayout user_layout = (LinearLayout) root.findViewById(R.id.id_register_item);
                     plus_id_register.setVisibility(View.GONE);
                     user_layout.setVisibility(View.VISIBLE);
 
-                    TextView user_nickname = (TextView) getView().findViewById(R.id.user_nickname);
-                    TextView user_level = (TextView) getView().findViewById(R.id.user_level);
-                    TextView user_tier = (TextView) getView().findViewById(R.id.user_tier);
-                    TextView user_mbti = (TextView) getView().findViewById(R.id.user_mbti);
-                    TextView user_manner = (TextView) getView().findViewById(R.id.user_manner);
+                    TextView user_nickname = (TextView) root.findViewById(R.id.user_nickname);
+                    TextView user_level = (TextView) root.findViewById(R.id.user_level);
+                    TextView user_tier = (TextView) root.findViewById(R.id.user_tier);
+                    TextView user_mbti = (TextView) root.findViewById(R.id.user_mbti);
+                    TextView user_manner = (TextView) root.findViewById(R.id.user_manner);
 
                     user_nickname.setText(name);
                     user_level.setText("Level: " + level);
@@ -214,7 +208,7 @@ public class MainActivity extends Fragment{
                     user_mbti.setText("MBTI: "+ "mbti");
                     user_manner.setText("Manner: "+ "manner");
 
-                    ImageView user_icon = (ImageView) getView().findViewById(R.id.user_icon);
+                    ImageView user_icon = (ImageView) root.findViewById(R.id.user_icon);
                     user_icon.setImageBitmap(icon);
 
 
@@ -229,10 +223,6 @@ public class MainActivity extends Fragment{
 
 
 
-    public void onClickChattingBtn(View view){
-        Intent intent = new Intent(root.getContext(), ChatActivity.class);
-        startActivity(intent);
-    }
     public void onClickMatchingBtn(View view) {
         Toast.makeText(root.getContext().getApplicationContext(), "Click Matching Button", Toast.LENGTH_SHORT).show();
     }

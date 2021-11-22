@@ -23,7 +23,7 @@ import java.net.URLConnection;
 
 class Name_API_Thread extends Thread{
     //api key 매번 갱신
-    String TOKEN = "RGAPI-a77a6433-0a9f-404b-b7ae-ef7c3677531e";
+    String TOKEN = "RGAPI-ebb19ac5-5bb2-48ca-8e2c-377296f68e48";
     private String Summoners_name;
     private String Summoners_id;
     private int Summoners_level;
@@ -43,8 +43,8 @@ class Name_API_Thread extends Thread{
         try{
             URL url = new URL(strUrl);
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
-            con.setConnectTimeout(5000);
-            con.setReadTimeout(5000);
+            con.setConnectTimeout(1000);
+            con.setReadTimeout(1000);
             con.setRequestMethod("GET");
             con.setDoOutput(false);
 

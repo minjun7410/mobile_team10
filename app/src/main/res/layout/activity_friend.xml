@@ -4,13 +4,20 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_margin="20dp"
-    >
+    android:orientation="vertical">
 
     <ListView
         android:id="@+id/FriendListView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:dividerHeight="15dp"
+        android:layout_height="wrap_content"
         android:divider="#ffffff"
-        />
+        android:dividerHeight="15dp">
+
+    </ListView>
+
+    <Button
+        android:id="@+id/chatBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="채팅" />
 </LinearLayout>

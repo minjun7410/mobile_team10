@@ -1,11 +1,13 @@
 package com.example.team10;
 
 import android.os.Bundle;
+import android.util.Log;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.firestore.auth.User;
@@ -16,22 +18,22 @@ public class FragActivity extends AppCompatActivity {
     UserActivity userActivity;
 
     private FragmentManager fragmentManager;
+    private FragmentTransaction fragmentTransaction;
 
-    int present_fragment = 0;
+    int present_fragment = 3;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_frag);
 
         fragmentManager = getSupportFragmentManager();
+        fragmentTransaction = fragmentManager.beginTransaction();
 
-        mainActivity = new MainActivity();
-        userActivity = new UserActivity();
+
+        mainActivity = (MainActivity) fragmentManager.findFragmentById(R.id.fragment);
+        fragmentTransaction.commit();
         friendActivity = new FriendActivity();
-        fragmentManager.beginTransaction().replace(R.id.container, mainActivity).commit();
-        fragmentManager.beginTransaction().add(R.id.container, friendActivity).commit();
-        fragmentManager.beginTransaction().add(R.id.container, userActivity).commit();
-
+        userActivity = new UserActivity();
         //하단 네비게이션 메뉴의 아이템을 누를 때마다 해당 동작을 실행한다.
         BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottomNavigationView);
         bottomNavigationView.setOnItemSelectedListener(item -> {
@@ -50,31 +52,22 @@ public class FragActivity extends AppCompatActivity {
         });
 
 
+
     }
     public void onFragmentChanged(int index) {
+
+        fragmentManager = getSupportFragmentManager();
+        fragmentTransaction = fragmentManager.beginTransaction();
         if (index == 0) {
-            if(mainActivity == null){
-            }
-            if(mainActivity != null) fragmentManager.beginTransaction().show(mainActivity).commit();
-            if(friendActivity != null) fragmentManager.beginTransaction().hide(friendActivity).commit();
-            if(userActivity != null) fragmentManager.beginTransaction().hide(userActivity).commit();
-        }
-        else if (index == 1) {
-            if(friendActivity == null){
-            }
-
-            if(friendActivity != null) fragmentManager.beginTransaction().show(friendActivity).commit();
-            if(mainActivity != null) fragmentManager.beginTransaction().hide(mainActivity).commit();
-            if(userActivity != null) fragmentManager.beginTransaction().hide(userActivity).commit(); }
-        else if (index == 2) {
-            if(userActivity == null){
-            }
-
-            if(userActivity != null) fragmentManager.beginTransaction().show(userActivity).commit();
-            if(friendActivity != null) fragmentManager.beginTransaction().hide(friendActivity).commit();
-            if(mainActivity != null) fragmentManager.beginTransaction().hide(mainActivity).commit();;
+            fragmentTransaction.replace(R.id.container, mainActivity);
+            fragmentTransaction.commit();
+        } else if (index == 1) {
+            fragmentTransaction.replace(R.id.container, friendActivity);
+            fragmentTransaction.commit();
+        } else if (index == 2) {
+            fragmentTransaction.replace(R.id.container, userActivity);
+            fragmentTransaction.commit();
         }
         present_fragment = index;
     }
-
 }
