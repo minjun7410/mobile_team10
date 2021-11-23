@@ -33,6 +33,9 @@
         <activity android:name=".ChatActivity" />
         <activity android:name=".FriendActivity" />
         <activity android:name=".UserActivity" />
+        <activity android:name=".ResultActivity"/>
+        <activity android:name=".TestActivity"/>
+
     </application>
 
 </manifest>
