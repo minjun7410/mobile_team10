@@ -12,6 +12,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.google.firebase.firestore.auth.User;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.DataInputStream;
@@ -31,7 +33,7 @@ public class ChatRoomActivity extends AppCompatActivity {
     InetAddress serverAddr;
     Socket socket;
     PrintWriter sendWriter;
-    private String ip = "172.30.1.39";
+    private String ip = "";
     private int port = 8888;
 
     TextView textView;
@@ -65,6 +67,7 @@ public class ChatRoomActivity extends AppCompatActivity {
         Intent intent = getIntent();
         UserID = intent.getStringExtra("username");
         textView.setText(UserID);
+        UserID = "SONGMJ";
         chatbutton = (Button) findViewById(R.id.chatbutton);
 
         new Thread() {

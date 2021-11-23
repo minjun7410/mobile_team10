@@ -11,4 +11,7 @@ public class Friend {
     public Friend(String user_nickname){
         this.user_nickname = user_nickname;
     }
+    public String getNickName(){
+        return user_nickname;
+    }
 }
