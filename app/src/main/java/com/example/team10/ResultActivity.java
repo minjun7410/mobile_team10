@@ -22,8 +22,8 @@ public class ResultActivity extends AppCompatActivity {
             "\"모험은 역시 친구랑 같이 해야 신나는 법!\"","\"파티를 시작한다!\"","\"죽음은 바람과 같지. 늘 내 곁에 있으니.\"",
             "\"내 검과 심장은 데마시아의 것이다!\"","\"새벽이 밝았습니다!\"","\"너랑 유미랑! 우리 함께 잘 해보자고!\""};
     int num;
-    int[] ic = {R.drawable.Darius,R.drawable.Nasus,R.drawable.Nunu,R.drawable.Rakan,R.drawable.Yasuo,
-            R.drawable.Garen,R.drawable.Leona,R.drawable.yuumi};
+    int[] ic = {R.drawable.darius,R.drawable.nasus,R.drawable.nunu,R.drawable.rakan,R.drawable.yasuo,
+            R.drawable.garen,R.drawable.leona,R.drawable.yuumi};
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

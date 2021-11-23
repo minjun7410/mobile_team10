@@ -9,7 +9,7 @@
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
         android:id="@+id/ima"
-        android:src="@drawable/Darius"/>
+        android:src="@drawable/darius"/>
 
     <TextView
         android:id="@+id/text_re"
