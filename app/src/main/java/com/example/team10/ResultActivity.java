@@ -25,6 +25,8 @@ public class ResultActivity extends AppCompatActivity {
     int[] ic = {R.drawable.darius,R.drawable.nasus,R.drawable.nunu,R.drawable.rakan,R.drawable.yasuo,
             R.drawable.garen,R.drawable.leona,R.drawable.yuumi};
 
+    String[] test_result; //결과 변수 (캐릭터, 아이콘 주소)
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_result);
@@ -42,6 +44,7 @@ public class ResultActivity extends AppCompatActivity {
                 num = i;
             }
         }
+        test_result = new String[]{text[num], String.valueOf(ic[num])};
         String str = "당신의 LOL플레이 성향은 \n" + text[num] + "입니다.";
         SpannableStringBuilder ssb = new SpannableStringBuilder(str);
         ssb.setSpan(new ForegroundColorSpan(Color.parseColor("#ff0000")),16, 16+text[num].length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
@@ -53,7 +56,8 @@ public class ResultActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                Intent it = new Intent(getApplication(),MainActivity.class);
+                startActivity(it);
             }
         });
 
