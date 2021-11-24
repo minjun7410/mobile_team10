@@ -56,16 +56,18 @@ public class MatchingActivity extends AppCompatActivity {
                 final AlertDialog.Builder alt_blt = new AlertDialog.Builder(MatchingActivity.this, R.style.plus_id_register_dialog_style);
                 alt_blt.setCancelable(false)
                         .setView(inflatedView)
-                        .setPositiveButton("친구 추가", new DialogInterface.OnClickListener() {
+                        .setPositiveButton("대화 하기", new DialogInterface.OnClickListener() {
                             @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-
+                            public void onClick(DialogInterface dialogInterface, int t) {
+                                String text = friendlist.get(i).getNickName();
+                                Intent intent = new Intent(MatchingActivity.this,ChatRoomActivity.class);
+                                intent.putExtra("username",text);
+                                startActivity(intent);
                             }
                         })
-                        .setNegativeButton("거절", new DialogInterface.OnClickListener() {
+                        .setNegativeButton("친구 추가", new DialogInterface.OnClickListener() {
                             @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-
+                            public void onClick(DialogInterface dialogInterface, int t) {
                             }
                         });
                 AlertDialog dialog = alt_blt.create();
@@ -77,6 +79,8 @@ public class MatchingActivity extends AppCompatActivity {
                 //startActivity(intent);
             }
         });
+
+
     }
 
     @Override

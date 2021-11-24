@@ -1,5 +1,6 @@
 package com.example.team10;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -24,6 +25,7 @@ public class FriendActivity extends Fragment {
     ArrayList<Friend> friendlist;
     FriendAdapter friendAdapter;
     Button chatBtn;
+    public static Context mContext;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -34,7 +36,6 @@ public class FriendActivity extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-
         chatBtn = (Button) getActivity().findViewById(R.id.chatBtn);
         chatBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -60,6 +61,9 @@ public class FriendActivity extends Fragment {
                 startActivity(intent);
             }
         });
+    }
+    public void addFriendView(String name){
+        friendlist.add(new Friend(name));
     }
     public void onClickChattingBtn(View view){
         Intent intent = new Intent(getView().getContext(), ChatActivity.class);
