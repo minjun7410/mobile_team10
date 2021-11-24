@@ -221,10 +221,12 @@ public class MainActivity extends Fragment{
         });
     }
 
+
+
     public void onClickMatchingBtn(View view) {
-        Intent intent = new Intent(getView().getContext() ,MatchingActivity.class);
-        startActivity(intent);
+        Toast.makeText(root.getContext().getApplicationContext(), "Click Matching Button", Toast.LENGTH_SHORT).show();
     }
+
     public void onClickRegisterBtn(View view){
         //Dialog로 닉네임를 받아서 api를 통해 정보를 가져와 ImageView에 입력.
         plus_id_register.setOnClickListener(new View.OnClickListener() {

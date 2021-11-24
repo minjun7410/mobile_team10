@@ -30,7 +30,7 @@
                 <TextView
                     android:textColor="@color/black"
                     android:layout_gravity="center"
-                    android:text="깐부 이름 : "
+                    android:text="유저 이름 : "
                     android:textSize="15dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
