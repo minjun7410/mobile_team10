@@ -12,7 +12,7 @@ public class SplashActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
-        moveMain(2); // 1초 후에 이동
+        moveMain(1); // 1초 후에 이동
     }
 
     private void moveMain(int sec) {

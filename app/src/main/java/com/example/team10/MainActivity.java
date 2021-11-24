@@ -1,7 +1,10 @@
 package com.example.team10;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
@@ -12,7 +15,10 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Base64;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -35,37 +41,32 @@ import java.util.HashMap;
 import java.util.Map;
 
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends Fragment{
     private FirebaseAuth firebaseAuth;
     final FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     Button plus_id_register;
     Button matchingBtn;
-    Button chatBtn;
+
     Button friendBtn;
     Button userInfo;
 
     Name_API_Thread apiThread;
 
+    View root;
 
 //    String register_file = "register_file";
 //    SharedPreferences sharedPreferences;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        root = inflater.inflate(R.layout.activity_main, container, false);
         firebaseAuth = FirebaseAuth.getInstance();
         FirebaseUser currentUser = firebaseAuth.getCurrentUser();
         String uid = currentUser.getUid();
 
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
-        chatBtn = (Button) findViewById(R.id.chatBtn);
-        matchingBtn = (Button) findViewById(R.id.matchingBtn);
-        plus_id_register = (Button) findViewById(R.id.plus_id_register);
-        friendBtn = (Button) findViewById(R.id.friendBtn);
-
-        userInfo = (Button) findViewById(R.id.BtnUserInfo);
+        matchingBtn = (Button) root.findViewById(R.id.matchingBtn);
+        plus_id_register = (Button) root.findViewById(R.id.plus_id_register);
 
 //        sharedPreferences = getSharedPreferences(register_file, 0);
 //        if(!sharedPreferences.getString("nickname", "").equals("")){
@@ -74,15 +75,29 @@ public class MainActivity extends AppCompatActivity {
 //        }
 
         db.collection("lol").document(uid).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-            @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                 DocumentSnapshot document = task.getResult();
-                if (document.exists()){
+                if (document.exists()) {
                     register_by_nickname(document.getData().get("name").toString());
                     setTextView_register_by_nickname();
                 }
             }
+
         });
+
+        matchingBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onClickMatchingBtn(view);
+            }
+        });
+        plus_id_register.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onClickRegisterBtn(view);
+            }
+        });
+        return root;
     }
 
 
@@ -111,7 +126,9 @@ public class MainActivity extends AppCompatActivity {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.JPEG, 70, baos);
         return baos.toByteArray();
+
     }
+
 
     public boolean register_by_nickname(String value){
         apiThread = new Name_API_Thread(value);
@@ -127,6 +144,7 @@ public class MainActivity extends AppCompatActivity {
         String nickname = value;
         String level = apiThread.getSummoners_info("level");
         String tier = apiThread.getSummoners_info("tier");
+        String rank = apiThread.getSummoners_info("rank");
         Bitmap icon = apiThread.getSummoners_bitmap();
         String sicon = BitmapToString(icon);
 
@@ -135,6 +153,8 @@ public class MainActivity extends AppCompatActivity {
         lolUserInfo.put("level", level);
         lolUserInfo.put("tier", tier);
         lolUserInfo.put("icon", sicon);
+        lolUserInfo.put("rank", rank);
+
 
         firebaseAuth = FirebaseAuth.getInstance();
         FirebaseUser currentUser = firebaseAuth.getCurrentUser();
@@ -144,7 +164,7 @@ public class MainActivity extends AppCompatActivity {
                 .set(lolUserInfo).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity().getApplicationContext(), e.toString(), Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -169,45 +189,40 @@ public class MainActivity extends AppCompatActivity {
                     String name = lolUserInfo.get("name").toString();
                     String level = lolUserInfo.get("level").toString();
                     String tier = lolUserInfo.get("tier").toString();
+                    String rank = lolUserInfo.get("rank").toString();
                     Bitmap icon = StringToBitmap(lolUserInfo.get("icon").toString());
 
-                    LinearLayout user_layout = (LinearLayout) findViewById(R.id.id_register_item);
+                    LinearLayout user_layout = (LinearLayout) root.findViewById(R.id.id_register_item);
                     plus_id_register.setVisibility(View.GONE);
                     user_layout.setVisibility(View.VISIBLE);
 
-                    TextView user_nickname = (TextView) findViewById(R.id.user_nickname);
-                    TextView user_level = (TextView) findViewById(R.id.user_level);
-                    TextView user_tier = (TextView) findViewById(R.id.user_tier);
-                    TextView user_mbti = (TextView) findViewById(R.id.user_mbti);
-                    TextView user_manner = (TextView) findViewById(R.id.user_manner);
+                    TextView user_nickname = (TextView) root.findViewById(R.id.user_nickname);
+                    TextView user_level = (TextView) root.findViewById(R.id.user_level);
+                    TextView user_tier = (TextView) root.findViewById(R.id.user_tier);
+                    TextView user_mbti = (TextView) root.findViewById(R.id.user_mbti);
+                    TextView user_manner = (TextView) root.findViewById(R.id.user_manner);
 
                     user_nickname.setText(name);
                     user_level.setText("Level: " + level);
-                    user_tier.setText("Tier: " + tier);
+                    user_tier.setText("Tier: " + tier + " " + rank);
                     user_mbti.setText("MBTI: "+ "mbti");
                     user_manner.setText("Manner: "+ "manner");
 
-                    ImageView user_icon = (ImageView) findViewById(R.id.user_icon);
+                    ImageView user_icon = (ImageView) root.findViewById(R.id.user_icon);
                     user_icon.setImageBitmap(icon);
+
+
+                    LinearLayout.LayoutParams mLayoutParams = (LinearLayout.LayoutParams) user_layout.getLayoutParams();
+                    mLayoutParams.bottomMargin = 100;
+                    user_layout.setLayoutParams(mLayoutParams);
+
                 }
             }
         });
     }
 
-    public void onClickChattingBtn(View view){
-        Intent intent = new Intent(this, ChatActivity.class);
-        startActivity(intent);
-    }
-    public void onClickFriendBtn(View view){
-        Intent intent = new Intent(this, FriendActivity.class);
-        startActivity(intent);
-    }
     public void onClickMatchingBtn(View view) {
-        Toast.makeText(getApplicationContext(), "Click Matching Button", Toast.LENGTH_SHORT).show();
-    }
-
-    public void onClickUserInfoBtn(View view){
-        Intent intent = new Intent(this, UserActivity.class);
+        Intent intent = new Intent(getView().getContext() ,MatchingActivity.class);
         startActivity(intent);
     }
     public void onClickRegisterBtn(View view){
@@ -215,9 +230,9 @@ public class MainActivity extends AppCompatActivity {
         plus_id_register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                final EditText et = new EditText(getApplicationContext());
+                final EditText et = new EditText(root.getContext().getApplicationContext());
                 //닉네임을 받는 dialog
-                final AlertDialog.Builder alt_blt = new AlertDialog.Builder(MainActivity.this, R.style.plus_id_register_dialog_style);
+                final AlertDialog.Builder alt_blt = new AlertDialog.Builder(root.getContext(), R.style.plus_id_register_dialog_style);
                 alt_blt.setTitle("아이디 생성")
                         .setMessage("닉네임을 적어주세요")
                         .setCancelable(false)
@@ -228,7 +243,7 @@ public class MainActivity extends AppCompatActivity {
                                 String value = et.getText().toString();
                                 /* 롤 API 사용자 정보 호출 */
                                 if (!register_by_nickname(value)){
-                                    Toast.makeText(getApplicationContext(), "존재하지않는 사용자입니다.", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(root.getContext().getApplicationContext(), "존재하지않는 사용자입니다.", Toast.LENGTH_SHORT).show();
                                     return;
                                 }
                                 setTextView_register_by_nickname();
