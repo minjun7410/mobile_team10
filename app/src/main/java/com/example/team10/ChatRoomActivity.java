@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.firestore.auth.User;
 
@@ -50,9 +51,12 @@ public class ChatRoomActivity extends AppCompatActivity {
         super.onStop();
         try {
             sendWriter.close();
+            onBackPressed();
             socket.close();
         } catch (IOException e) {
             e.printStackTrace();
+        } catch (java.lang.RuntimeException e){
+
         }
     }
 
