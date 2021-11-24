@@ -117,7 +117,7 @@ public class Frag3 extends Fragment {
                         }
                     }
 
-                    Intent intent = new Intent(getActivity(), com.example.team10.ResultActivity.class);
+                    Intent intent = new Intent(getActivity(),ResultActivity.class);
                     intent.putExtra("result",itn);
                     startActivity(intent);
 

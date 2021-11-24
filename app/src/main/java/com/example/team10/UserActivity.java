@@ -1,6 +1,9 @@
 package com.example.team10;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -22,12 +25,21 @@ public class UserActivity extends AppCompatActivity {
         FirebaseUser currentUser = firebaseAuth.getCurrentUser();
         String email = currentUser.getEmail();
         String uid = currentUser.getUid();
+        Button button = (Button)findViewById(R.id.test_button);
 
         if (currentUser != null ){
             Toast.makeText(UserActivity.this, uid, Toast.LENGTH_SHORT).show();
         } else{
             Toast.makeText(UserActivity.this,"not current User", Toast.LENGTH_SHORT).show();
         }
+
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplication(),TestActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
 }
