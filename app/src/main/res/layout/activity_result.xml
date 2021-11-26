@@ -39,7 +39,7 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="25dp"
-        android:text="메인화면"
+        android:text="@string/ok"
         android:textSize="20dp" />
 
 </RelativeLayout>
