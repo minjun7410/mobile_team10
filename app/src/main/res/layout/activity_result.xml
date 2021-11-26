@@ -4,12 +4,11 @@
     android:layout_height="match_parent">
 
     <ImageView
+        android:id="@+id/ima"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true"
-        android:id="@+id/ima"
-        android:src="@drawable/darius"/>
+        android:layout_centerInParent="true"
+        android:src="@drawable/darius" />
 
     <TextView
         android:id="@+id/text_re"
@@ -22,23 +21,25 @@
         android:text="@string/yes" />
 
     <TextView
+        android:id="@+id/ment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/ima"
         android:layout_centerHorizontal="true"
         android:gravity="center"
-        android:id="@+id/ment"
-        android:textSize="23dp"
-        android:textStyle="bold|italic"
-        android:text="@string/no"/>
+        android:layout_marginBottom="60dp"
+        android:text="@string/no"
+        android:textSize="25dp"
+        android:textStyle="bold|italic" />
 
     <Button
+        android:id="@+id/btn_main"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="메인화면"
-        android:textSize="20dp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:id="@+id/btn_main"/>
+        android:layout_marginBottom="25dp"
+        android:text="메인화면"
+        android:textSize="20dp" />
 
 </RelativeLayout>
