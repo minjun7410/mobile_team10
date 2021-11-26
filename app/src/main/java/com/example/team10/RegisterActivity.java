@@ -106,6 +106,9 @@ public class RegisterActivity extends AppCompatActivity {
                             userInfo.put("email", user.getEmail());
                             userInfo.put("mbti", "");
 
+                            // 회원가입 시 임의로 친구 추가
+                            userInfo.put("friend", "hide on bush,CloudTemplar KR,");
+
                             // firestore cloud database
                             db.collection("users").document(user.getUid())
                                     .set(userInfo)

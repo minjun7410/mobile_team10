@@ -14,9 +14,19 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+
 import java.util.ArrayList;
+import java.util.Map;
 
 public class FriendActivity extends Fragment {
+    private FirebaseAuth firebaseAuth;
+    final FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     ListView FriendListView;
     ArrayList<Friend> friendlist;
@@ -42,12 +52,33 @@ public class FriendActivity extends Fragment {
         });
 
         FriendListView = getView().findViewById(R.id.FriendListView);
-        friendlist = new ArrayList<Friend>();
-        friendlist.add(new Friend("hide on bush"));
-        friendlist.add(new Friend("송민준"));
-        friendlist.add(new Friend("CloudTemplar KR"));
-        friendAdapter = new FriendAdapter(friendlist, getActivity().getApplicationContext());
-        FriendListView.setAdapter(friendAdapter);
+
+        firebaseAuth = FirebaseAuth.getInstance();
+        FirebaseUser currentUser = firebaseAuth.getCurrentUser();
+        String uid = currentUser.getUid();
+
+        db.collection("users").document(uid).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                DocumentSnapshot document = task.getResult();
+                if (document.exists()){
+                    Map<String, Object> userInfo = document.getData();
+                    String[] friends = userInfo.get("friend").toString().split(",");
+                    friendlist = new ArrayList<Friend>();
+                    for (int i=0; i<friends.length; i++){
+                        friendlist.add(new Friend(friends[i]));
+                    }
+                    friendAdapter = new FriendAdapter(friendlist, getActivity().getApplicationContext());
+                    FriendListView.setAdapter(friendAdapter);
+                }
+            }
+        });
+
+//        friendlist = new ArrayList<Friend>();
+//        friendlist.add(new Friend("hide on bush"));
+//        friendlist.add(new Friend("송민준"));
+//        friendlist.add(new Friend("CloudTemplar KR"));
+
     }
 
     public void onClickChattingBtn(View view){
