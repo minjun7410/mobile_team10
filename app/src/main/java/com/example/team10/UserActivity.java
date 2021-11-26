@@ -24,8 +24,6 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-import org.w3c.dom.Text;
-
 public class UserActivity extends Fragment {
     private FirebaseAuth firebaseAuth;
     final FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -36,7 +34,17 @@ public class UserActivity extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.activity_user, container, false);
+        View view = inflater.inflate(R.layout.activity_user, container, false);
+        TextView textView = (TextView)view.findViewById(R.id.re_test);
+        textView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(),TestActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        return view;
     }
 
     @Override

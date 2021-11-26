@@ -19,4 +19,11 @@
 
     <string name="register_game_id">+ 유저 등록</string>
     <string name="matching_friend">친구찾기</string>
+
+    <string name="yes">예</string>
+    <string name="no">아니오</string>
+    <string name="back">이전</string>
+    <string name="next">다음</string>
+    <string name="res">결과 확인</string>
+
 </resources>
