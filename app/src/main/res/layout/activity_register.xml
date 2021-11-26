@@ -26,6 +26,12 @@
         tools:ignore="TouchTargetSizeCheck"/>
 
     <TextView
+        android:id="@+id/tvEmail_register"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="10dp" />
+
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="10dp"
@@ -39,6 +45,11 @@
         android:hint="@string/input_pw"
         android:inputType="textPassword"
         tools:ignore="TouchTargetSizeCheck" />
+    <TextView
+        android:id="@+id/tvPassword_register"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="10dp" />
 
     <LinearLayout
         android:id="@+id/passwordCheckContainer_register"

@@ -73,6 +73,27 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable s) { /* 텍스트 입력 후 call back */ }
         });
+
+        EtPassword.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                String password = EtPassword.getText().toString();
+
+                TextView TvPassword = (TextView) findViewById(R.id.tvPassword_register);
+
+                if (password.length() < 6){
+                    TvPassword.setText("6자리 이상 입력해주세요.");
+                } else{
+                    TvPassword.setText("");
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) { }
+        });
     }
 
 
