@@ -22,7 +22,10 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.Map;
 
 public class UserActivity extends Fragment {
     private FirebaseAuth firebaseAuth;
@@ -31,12 +34,18 @@ public class UserActivity extends Fragment {
     Button BtnLogout;
     Button BtnWithdraw;
 
+    TextView TvMbtiTest;
+    TextView TvEmail;
+    TextView TvMbti;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.activity_user, container, false);
-        TextView textView = (TextView)view.findViewById(R.id.re_test);
-        textView.setOnClickListener(new View.OnClickListener() {
+
+        // test text click event
+        TvMbtiTest = (TextView) view.findViewById(R.id.mbtiTest);
+        TvMbtiTest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(),TestActivity.class);
@@ -51,6 +60,7 @@ public class UserActivity extends Fragment {
     public void onStart() {
         super.onStart();
 
+        // logout button click event
         BtnLogout = (Button) getView().findViewById(R.id.btnLogout) ;
         BtnLogout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -59,6 +69,7 @@ public class UserActivity extends Fragment {
             }
         });
 
+        // withdraw button click event
         BtnWithdraw = (Button) getView().findViewById(R.id.btnWithdraw);
         BtnWithdraw.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -70,14 +81,34 @@ public class UserActivity extends Fragment {
         firebaseAuth = FirebaseAuth.getInstance();
         FirebaseUser currentUser = firebaseAuth.getCurrentUser();
 
-        TextView TvEmail = (TextView) getView().findViewById(R.id.email_userInfo);
 
         if (currentUser != null ){
+            // email
             String email = currentUser.getEmail();
+            TvEmail = (TextView) getView().findViewById(R.id.email_userInfo);
             TvEmail.setText(email);
+
+            // mbti
+            String uid = currentUser.getUid();
+            db.collection("users").document(uid).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+                        Map<String, Object> userInfo = document.getData();
+                        String mbti = userInfo.get("mbti").toString();
+                        if (!mbti.equals("")){
+                            TvMbti = (TextView) getView().findViewById(R.id.mbti_userInfo);
+                            TvMbti.setText(mbti);
+                        }
+                    }
+                }
+            });
         } else{
+            // not current user
             Toast.makeText(getActivity(),"not current User", Toast.LENGTH_SHORT).show();
         }
+
 
     }
 

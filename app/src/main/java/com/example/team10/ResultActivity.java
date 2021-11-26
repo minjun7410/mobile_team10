@@ -10,10 +10,20 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
+
 public class ResultActivity extends AppCompatActivity {
+
+    private FirebaseAuth firebaseAuth;
+    final FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     int[] icon = {14,6,10,2,12,4,8,0};
     String[] text = {"일당백 다리우스","농사꾼 나서스", "눈사람 만드는 누누와 윌럼프", "화려한 등장 라칸",
@@ -53,6 +63,8 @@ public class ResultActivity extends AppCompatActivity {
         text2.setText(ment[num]);
         imageView.setImageResource(ic[num]);
 
+        saveResultFirestore(text[num]);
+
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -62,4 +74,18 @@ public class ResultActivity extends AppCompatActivity {
         });
 
     }
+
+    public void saveResultFirestore(String mbti){
+        firebaseAuth =  FirebaseAuth.getInstance();
+        FirebaseUser currentUser = firebaseAuth.getCurrentUser();
+        String uid = currentUser.getUid();
+
+        db.collection("users").document(uid).update("mbti", mbti).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                return;
+            }
+        });
+    }
+
 }

@@ -104,6 +104,7 @@ public class RegisterActivity extends AppCompatActivity {
                             HashMap<Object,String> userInfo = new HashMap<>();
 //                            userInfo.put("uid", user.getUid());
                             userInfo.put("email", user.getEmail());
+                            userInfo.put("mbti", "");
 
                             // firestore cloud database
                             db.collection("users").document(user.getUid())
