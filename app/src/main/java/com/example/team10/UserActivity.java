@@ -70,13 +70,13 @@ public class UserActivity extends Fragment {
         });
 
         // withdraw button click event
-        BtnWithdraw = (Button) getView().findViewById(R.id.btnWithdraw);
-        BtnWithdraw.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onClickWithdrawBtn(v);
-            }
-        });
+//        BtnWithdraw = (Button) getView().findViewById(R.id.btnWithdraw);
+//        BtnWithdraw.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                onClickWithdrawBtn(v);
+//            }
+//        });
 
         firebaseAuth = FirebaseAuth.getInstance();
         FirebaseUser currentUser = firebaseAuth.getCurrentUser();
