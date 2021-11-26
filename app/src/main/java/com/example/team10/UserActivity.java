@@ -37,6 +37,7 @@ public class UserActivity extends Fragment {
     TextView TvMbtiTest;
     TextView TvEmail;
     TextView TvMbti;
+    TextView TvLolUsername;
 
     @Nullable
     @Override
@@ -81,6 +82,8 @@ public class UserActivity extends Fragment {
         firebaseAuth = FirebaseAuth.getInstance();
         FirebaseUser currentUser = firebaseAuth.getCurrentUser();
 
+        String uid = currentUser.getUid();
+
 
         if (currentUser != null ){
             // email
@@ -89,7 +92,6 @@ public class UserActivity extends Fragment {
             TvEmail.setText(email);
 
             // mbti
-            String uid = currentUser.getUid();
             db.collection("users").document(uid).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                 @Override
                 public void onComplete(@NonNull Task<DocumentSnapshot> task) {
@@ -104,6 +106,21 @@ public class UserActivity extends Fragment {
                     }
                 }
             });
+
+            // game(lol)
+            db.collection("lol").document(uid).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()){
+                        Map<String, Object> userInfo = document.getData();
+                        String username = userInfo.get("name").toString();
+                        TvLolUsername = (TextView) getView().findViewById(R.id.lol_userInfo);
+                        TvLolUsername.setText(username);
+                    }
+                }
+            });
+
         } else{
             // not current user
             Toast.makeText(getActivity(),"not current User", Toast.LENGTH_SHORT).show();

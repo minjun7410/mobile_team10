@@ -23,7 +23,7 @@ import java.net.URLConnection;
 
 class Name_API_Thread extends Thread{
     //api key 매번 갱신
-    String TOKEN = "RGAPI-ebb19ac5-5bb2-48ca-8e2c-377296f68e48";
+    String TOKEN = "RGAPI-6990929c-2264-459b-a440-268360a10afb";
     private String Summoners_name;
     private String Summoners_id;
     private int Summoners_level;
