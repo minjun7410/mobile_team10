@@ -1,9 +1,12 @@
 package com.example.team10;
 
+import androidx.annotation.ColorInt;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -65,6 +68,7 @@ public class RegisterActivity extends AppCompatActivity {
 
                 if (!password.equals(checkPassword)){
                     TvPasswordCheck.setText("비밀번호가 일치하지 않습니다.");
+                    TvPasswordCheck.setTextColor(Color.parseColor("#E53C7F"));
                 } else{
                     TvPasswordCheck.setText("");
                 }
@@ -86,6 +90,7 @@ public class RegisterActivity extends AppCompatActivity {
 
                 if (password.length() < 6){
                     TvPassword.setText("6자리 이상 입력해주세요.");
+                    TvPassword.setTextColor(Color.parseColor("#E53C7F"));
                 } else{
                     TvPassword.setText("");
                 }

@@ -23,7 +23,8 @@
         android:layout_marginRight="15dp"
         android:inputType="textEmailAddress"
         android:hint="@string/input_email"
-        tools:ignore="TouchTargetSizeCheck"/>
+        tools:ignore="TouchTargetSizeCheck"
+        android:layout_marginBottom="10dp"/>
 
     <TextView
         android:id="@+id/tvEmail_register"
@@ -49,7 +50,8 @@
         android:id="@+id/tvPassword_register"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="10dp" />
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"/>
 
     <LinearLayout
         android:id="@+id/passwordCheckContainer_register"
@@ -76,7 +78,8 @@
             android:id="@+id/tvPasswordCheck_register"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="10dp" />
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"/>
     </LinearLayout>
 
 
@@ -84,7 +87,6 @@
         android:id="@+id/btnRegister_register"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="20dp"
         android:onClick="onClickBtnRegister"
         android:text="@string/register" />
 
