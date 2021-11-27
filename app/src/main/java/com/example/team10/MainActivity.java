@@ -224,7 +224,8 @@ public class MainActivity extends Fragment{
 
 
     public void onClickMatchingBtn(View view) {
-        Toast.makeText(root.getContext().getApplicationContext(), "Click Matching Button", Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(getActivity() ,MatchingActivity.class);
+        startActivity(intent);
     }
 
     public void onClickRegisterBtn(View view){

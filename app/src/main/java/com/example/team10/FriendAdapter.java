@@ -1,6 +1,7 @@
 package com.example.team10;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -42,7 +43,6 @@ public class FriendAdapter extends BaseAdapter {
         view = inflater.inflate(R.layout.friend_item, viewGroup, false);
 
         String value = FriendList.get(i).user_nickname;
-
         Name_API_Thread apiThread = new Name_API_Thread(value);
         try {
             apiThread.start();
@@ -65,7 +65,15 @@ public class FriendAdapter extends BaseAdapter {
         user_manner.setText("Manner: "+apiThread.getSummoners_info("manner"));
 
         ImageView user_icon = view.findViewById(R.id.user_icon);
-        user_icon.setImageBitmap(apiThread.getSummoners_bitmap());
+        Bitmap uBitmap = apiThread.getSummoners_bitmap();
+        user_icon.setImageBitmap(uBitmap);
+
+        FriendList.get(i).user_icon = uBitmap;
+        FriendList.get(i).user_tier = apiThread.getSummoners_info("tier") + " " + apiThread.getSummoners_info("rank");
+        FriendList.get(i).user_level = apiThread.getSummoners_info("level");
+        FriendList.get(i).user_mbti = apiThread.getSummoners_info("mbti");
+        FriendList.get(i).user_manner = apiThread.getSummoners_info("manner");
+
 
         return view;
     }

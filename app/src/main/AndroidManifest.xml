@@ -31,7 +31,7 @@
         <activity android:name=".FragActivity" />
         <activity android:name=".RegisterActivity" />
         <activity android:name=".ChatActivity" />
-        <activity android:name=".UserActivity" />
+        <activity android:name=".MatchingActivity" />
         <activity android:name=".ResultActivity"/>
         <activity android:name=".TestActivity"/>
 
