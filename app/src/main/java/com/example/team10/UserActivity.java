@@ -25,6 +25,8 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import org.w3c.dom.Text;
+
 import java.util.Map;
 
 public class UserActivity extends Fragment {
@@ -38,21 +40,23 @@ public class UserActivity extends Fragment {
     TextView TvEmail;
     TextView TvMbti;
     TextView TvLolUsername;
+    TextView TvLolUserConnect;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.activity_user, container, false);
 
-        // test text click event
-        TvMbtiTest = (TextView) view.findViewById(R.id.mbtiTest);
-        TvMbtiTest.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getActivity(),TestActivity.class);
-                startActivity(intent);
-            }
-        });
+
+
+        // 검사하기
+
+//        TvLolUserConnect.setOnClickListener(new View.OnClickListener(){
+//            @Override
+//            public void onClick(View view) {
+//                Toast.makeText(getActivity(), "unlink", Toast.LENGTH_SHORT).show();
+//            }
+//        });
 
         return view;
     }
@@ -60,6 +64,13 @@ public class UserActivity extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
+
+        TvMbtiTest = (TextView) getView().findViewById(R.id.mbtiTest);
+
+        TvEmail = (TextView) getView().findViewById(R.id.email_userInfo);
+        TvMbti = (TextView) getView().findViewById(R.id.mbti_userInfo);
+        TvLolUsername = (TextView) getView().findViewById(R.id.lol_username);
+        TvLolUserConnect = (TextView) getView().findViewById(R.id.lol_userConnect);
 
         // logout button click event
         BtnLogout = (Button) getView().findViewById(R.id.btnLogout) ;
@@ -70,15 +81,26 @@ public class UserActivity extends Fragment {
             }
         });
 
-        // withdraw button click event
-//        BtnWithdraw = (Button) getView().findViewById(R.id.btnWithdraw);
-//        BtnWithdraw.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                onClickWithdrawBtn(v);
-//            }
-//        });
+        // mbti test click event
+        TvMbtiTest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(),TestActivity.class);
+                startActivity(intent);
+            }
+        });
 
+        TvLolUserConnect.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (TvLolUserConnect.getText().equals("연동해제")){
+                    onClickUnlink(v, "lol"); // test
+                }
+            }
+        });
+
+
+        // userInfo
         firebaseAuth = FirebaseAuth.getInstance();
         FirebaseUser currentUser = firebaseAuth.getCurrentUser();
 
@@ -88,7 +110,6 @@ public class UserActivity extends Fragment {
         if (currentUser != null ){
             // email
             String email = currentUser.getEmail();
-            TvEmail = (TextView) getView().findViewById(R.id.email_userInfo);
             TvEmail.setText(email);
 
             // mbti
@@ -100,7 +121,6 @@ public class UserActivity extends Fragment {
                         Map<String, Object> userInfo = document.getData();
                         String mbti = userInfo.get("mbti").toString();
                         if (!mbti.equals("")){
-                            TvMbti = (TextView) getView().findViewById(R.id.mbti_userInfo);
                             TvMbti.setText(mbti);
                         }
                     }
@@ -115,12 +135,11 @@ public class UserActivity extends Fragment {
                     if (document.exists()){
                         Map<String, Object> userInfo = document.getData();
                         String username = userInfo.get("name").toString();
-                        TvLolUsername = (TextView) getView().findViewById(R.id.lol_userInfo);
                         TvLolUsername.setText(username);
+                        TvLolUserConnect.setText("연동해제");
                     }
                 }
             });
-
         } else{
             // not current user
             Toast.makeText(getActivity(),"not current User", Toast.LENGTH_SHORT).show();
@@ -128,6 +147,21 @@ public class UserActivity extends Fragment {
 
 
     }
+
+    public void onClickUnlink(View view, String game){
+//        Toast.makeText(getActivity(),"click unlink", Toast.LENGTH_SHORT).show();
+        FirebaseUser currentUser = firebaseAuth.getCurrentUser();
+        String uid = currentUser.getUid();
+
+        db.collection(game).document(uid).delete().addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                TvLolUsername.setText("");
+                TvLolUserConnect.setText("미연동");
+            }
+        });
+    }
+
 
     public void onClickLogoutBtn(View view){
         AlertDialog.Builder builder = new AlertDialog.Builder(getView().getContext());
@@ -144,53 +178,6 @@ public class UserActivity extends Fragment {
                 Intent intent = new Intent(getView().getContext(), LoginActivity.class);
                 startActivity(intent);
                 getActivity().finish();
-            }
-        });
-        builder.setNegativeButton("취소", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                return;
-            }
-        });
-        AlertDialog alertDialog = builder.create();
-        alertDialog.show();
-    }
-
-    public void onClickWithdrawBtn(View view){
-
-        firebaseAuth = FirebaseAuth.getInstance();
-        FirebaseUser currentUser = firebaseAuth.getCurrentUser();
-
-        String uid = currentUser.getUid();
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(getView().getContext());
-        builder.setTitle("회원탈퇴").setMessage("정말 탈퇴 하시겠습니까?");
-        builder.setPositiveButton("확인", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                if (currentUser != null)
-                {
-                    Toast.makeText(getActivity(),currentUser.getEmail(), Toast.LENGTH_SHORT).show();
-                    currentUser.delete().addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            Toast.makeText(getActivity(), e.toString(), Toast.LENGTH_LONG).show();
-                        }
-                    });
-                    //                currentUser.delete().addOnCompleteListener(new OnCompleteListener<Void>() {
-//                    @Override
-//                    public void onComplete(@NonNull Task<Void> task) {
-//                        if (task.isSuccessful()) {
-//                            Toast.makeText(getActivity(), "탈퇴되었습니다.", Toast.LENGTH_LONG).show();
-//                        }
-//                    }
-//                }).addOnFailureListener(new OnFailureListener() {
-//                    @Override
-//                    public void onFailure(@NonNull Exception e) {
-//                        Toast.makeText(getActivity(), e.toString(), Toast.LENGTH_LONG).show();
-//                    }
-//                });
-                }
             }
         });
         builder.setNegativeButton("취소", new DialogInterface.OnClickListener() {
