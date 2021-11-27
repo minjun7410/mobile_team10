@@ -44,7 +44,7 @@ import java.util.Map;
 public class MainActivity extends Fragment{
     private FirebaseAuth firebaseAuth;
     final FirebaseFirestore db = FirebaseFirestore.getInstance();
-
+    int is_registered = 0;
     Button plus_id_register;
     Button matchingBtn;
 
@@ -80,6 +80,7 @@ public class MainActivity extends Fragment{
                 if (document.exists()) {
                     register_by_nickname(document.getData().get("name").toString());
                     setTextView_register_by_nickname();
+                    is_registered = 1;
                 }
             }
 
@@ -224,38 +225,48 @@ public class MainActivity extends Fragment{
 
 
     public void onClickMatchingBtn(View view) {
-        Intent intent = new Intent(getActivity() ,MatchingActivity.class);
-        startActivity(intent);
+        if(is_registered == 0){
+            Toast.makeText(root.getContext().getApplicationContext(), "유저등록을 먼저 해주세요", Toast.LENGTH_SHORT).show();
+        }
+        else {
+            Intent intent = new Intent(getActivity(), MatchingActivity.class);
+            startActivity(intent);
+        }
     }
 
     public void onClickRegisterBtn(View view){
         //Dialog로 닉네임를 받아서 api를 통해 정보를 가져와 ImageView에 입력.
-        plus_id_register.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                final EditText et = new EditText(root.getContext().getApplicationContext());
-                //닉네임을 받는 dialog
-                final AlertDialog.Builder alt_blt = new AlertDialog.Builder(root.getContext(), R.style.plus_id_register_dialog_style);
-                alt_blt.setTitle("아이디 생성")
-                        .setMessage("닉네임을 적어주세요")
-                        .setCancelable(false)
-                        .setView(et)
-                        .setPositiveButton("확인", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                String value = et.getText().toString();
-                                /* 롤 API 사용자 정보 호출 */
-                                if (!register_by_nickname(value)){
-                                    Toast.makeText(root.getContext().getApplicationContext(), "존재하지않는 사용자입니다.", Toast.LENGTH_SHORT).show();
-                                    return;
-                                }
-                                setTextView_register_by_nickname();
-                            }
-                        });
-                AlertDialog dialog = alt_blt.create();
-                dialog.show();
-            }
-        });
+        EditText et = new EditText(root.getContext().getApplicationContext());
+        et.setSingleLine(true);
+
+        //닉네임을 받는 dialog
+        final AlertDialog.Builder alt_blt = new AlertDialog.Builder(root.getContext(), R.style.plus_id_register_dialog_style);
+        alt_blt.setTitle("아이디 생성")
+                .setMessage("닉네임을 적어주세요")
+                .setCancelable(false)
+                .setView(et)
+                .setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        is_registered = 1;
+                        String value = et.getText().toString();
+                        /* 롤 API 사용자 정보 호출 */
+                        if (!register_by_nickname(value)){
+                            Toast.makeText(root.getContext().getApplicationContext(), "존재하지않는 사용자입니다.", Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+                        setTextView_register_by_nickname();
+                    }
+                })
+                .setNegativeButton("취소", new DialogInterface.OnClickListener(){
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        is_registered = 0;
+                    }
+                });
+
+        AlertDialog dialog = alt_blt.create();
+        dialog.show();
 
     }
 }

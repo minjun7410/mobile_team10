@@ -48,16 +48,6 @@ public class UserActivity extends Fragment {
         View view = inflater.inflate(R.layout.activity_user, container, false);
 
 
-
-        // 검사하기
-
-//        TvLolUserConnect.setOnClickListener(new View.OnClickListener(){
-//            @Override
-//            public void onClick(View view) {
-//                Toast.makeText(getActivity(), "unlink", Toast.LENGTH_SHORT).show();
-//            }
-//        });
-
         return view;
     }
 
