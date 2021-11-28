@@ -25,7 +25,6 @@ public class Frag2 extends Fragment {
     TestActivity main;
     int count;
     boolean re2;
-    boolean re;
     FragmentTransaction tran;
     Frag1 frag1;
 
@@ -121,15 +120,10 @@ public class Frag2 extends Fragment {
                         re2 = false;
                     }
 
-                    re = getArguments().getBoolean("re");
-
-                    Bundle bundle = new Bundle();
-                    bundle.putBoolean("re2",re2);
-                    bundle.putBoolean("re1",re);
+                    main.bool[1] = re2;
 
                     FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
                     Frag3 frag3 = new Frag3();
-                    frag3.setArguments(bundle);
                     transaction.replace(R.id.main, frag3);
                     transaction.commit();
                 }

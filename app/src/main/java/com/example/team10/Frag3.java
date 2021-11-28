@@ -25,9 +25,7 @@ public class Frag3 extends Fragment {
 
     TestActivity main;
     int count, itn;
-    boolean re3 = false;
-    Boolean re1;
-    Boolean re2;
+    boolean re1,re2,re3;
     FragmentTransaction tran;
     Frag2 frag2;
 
@@ -72,8 +70,7 @@ public class Frag3 extends Fragment {
                 rs12 = rg12.getCheckedRadioButtonId();
                 rs13 = rg13.getCheckedRadioButtonId();
                 int[] rs = {rs11, rs12, rs13,};
-                re1 = getArguments().getBoolean("re1");
-                re2 = getArguments().getBoolean("re2");
+
 
 
                 if(IntStream.of(rs).anyMatch(i -> i == -1)){
@@ -110,6 +107,9 @@ public class Frag3 extends Fragment {
 
                     itn = 0;
 
+                    re1 = main.bool[0];
+                    re2 = main.bool[1];
+
                     Boolean[] res = {re1,re2,re3};
                     for(int s = 0; s < res.length; s++){
                         if(res[s]){
@@ -120,7 +120,6 @@ public class Frag3 extends Fragment {
                     Intent intent = new Intent(getActivity(),ResultActivity.class);
                     intent.putExtra("result",itn);
                     startActivity(intent);
-
                 }
             }
         });

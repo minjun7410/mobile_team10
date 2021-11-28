@@ -10,6 +10,7 @@ public class TestActivity extends AppCompatActivity {
     FragmentManager fm;
     FragmentTransaction tran;
     Frag1 f1;
+    Boolean[] bool = new Boolean[2]; //조사 결과
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

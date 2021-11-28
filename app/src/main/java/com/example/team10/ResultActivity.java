@@ -35,7 +35,7 @@ public class ResultActivity extends AppCompatActivity {
     int[] ic = {R.drawable.darius,R.drawable.nasus,R.drawable.nunu,R.drawable.rakan,R.drawable.yasuo,
             R.drawable.garen,R.drawable.leona,R.drawable.yuumi};
 
-    String[] test_result; //결과 변수 (캐릭터, 아이콘 주소)
+    String test_result; //결과 변수 (캐릭터 이름)
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,16 +54,16 @@ public class ResultActivity extends AppCompatActivity {
                 num = i;
             }
         }
-        test_result = new String[]{text[num], String.valueOf(ic[num])};
-        String str = "당신의 LOL플레이 성향은 \n" + text[num] + "입니다.";
+        test_result = text[num];
+        String str = "당신의 LOL플레이 성향은 \n" + test_result + "입니다.";
         SpannableStringBuilder ssb = new SpannableStringBuilder(str);
-        ssb.setSpan(new ForegroundColorSpan(Color.parseColor("#ff0000")),16, 16+text[num].length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        ssb.setSpan(new ForegroundColorSpan(Color.parseColor("#ff0000")),16, 16+test_result.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
 
         text1.setText(ssb);
         text2.setText(ment[num]);
         imageView.setImageResource(ic[num]);
 
-        saveResultFirestore(text[num]);
+        saveResultFirestore(test_result);
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override

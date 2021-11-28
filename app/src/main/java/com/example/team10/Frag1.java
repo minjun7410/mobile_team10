@@ -108,15 +108,12 @@ public class Frag1 extends Fragment {
                         re1 = false;
                     }
 
-                    Bundle bundle = new Bundle();
-                    bundle.putBoolean("re",re1);
+                    main.bool[0] = re1;
 
                     FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
                     Frag2 frag2 = new Frag2();
-                    frag2.setArguments(bundle);
                     transaction.replace(R.id.main, frag2);
                     transaction.commit();
-
                 }
             }
         });
