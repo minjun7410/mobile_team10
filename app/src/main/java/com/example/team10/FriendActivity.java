@@ -54,7 +54,6 @@ public class FriendActivity extends Fragment {
         });
 
         FriendListView = getView().findViewById(R.id.FriendListView);
-
         firebaseAuth = FirebaseAuth.getInstance();
         FirebaseUser currentUser = firebaseAuth.getCurrentUser();
         String uid = currentUser.getUid();
@@ -75,11 +74,6 @@ public class FriendActivity extends Fragment {
                 }
             }
         });
-
-//        friendlist = new ArrayList<Friend>();
-//        friendlist.add(new Friend("hide on bush"));
-//        friendlist.add(new Friend("송민준"));
-//        friendlist.add(new Friend("CloudTemplar KR"));
 
     }
     public void addFriendView(String name){

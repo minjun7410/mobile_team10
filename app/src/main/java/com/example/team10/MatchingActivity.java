@@ -40,8 +40,8 @@ public class MatchingActivity extends AppCompatActivity {
         setContentView(R.layout.activity_matching);
         FriendListView = findViewById(R.id.FriendListView);
         friendlist = new ArrayList<Friend>();
-        friendlist.add(new Friend("감자"));
-        friendlist.add(new Friend("고구마"));
+        friendlist.add(new Friend("초 코"));
+        friendlist.add(new Friend("바닐라"));
         friendAdapter = new FriendAdapter(friendlist, getApplicationContext());
         FriendListView.setAdapter(friendAdapter);
 

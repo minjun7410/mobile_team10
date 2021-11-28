@@ -23,7 +23,7 @@ import java.net.URLConnection;
 
 class Name_API_Thread extends Thread{
     //api key 매번 갱신
-    String TOKEN = "RGAPI-6990929c-2264-459b-a440-268360a10afb";
+    String TOKEN = "RGAPI-d2e56a66-105f-4e59-9c80-c27229796759";
     private String Summoners_name;
     private String Summoners_id;
     private int Summoners_level;
@@ -87,12 +87,13 @@ class Name_API_Thread extends Thread{
         //API lol_api = new API();
         JSONObject jsonObj = get(requestURL);
         try {
+
             if(jsonObj == null){ is_success = false; return; }
             else{ is_success = true;}
             Summoners_id = (String) jsonObj.get("id");
             Summoners_level = (int) jsonObj.get("summonerLevel");
             Summoners_icon = (int) jsonObj.get("profileIconId");
-            Summoners_bitmap = getImageFromUrl("https://ddragon.leagueoflegends.com/cdn/10.18.1/img/profileicon/"+getSummoners_info("icon")+".png");
+            Summoners_bitmap = getImageFromUrl("https://ddragon.leagueoflegends.com/cdn/10.6.1/img/profileicon/"+getSummoners_info("icon")+".png");
 
             // 현재 레벨만 로그에 띄움
             Log.d("Succsess : ", "get ID");
